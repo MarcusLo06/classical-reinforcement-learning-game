@@ -21,22 +21,34 @@ class LevelManager:
 
 
     async def loadLevel(self, level: int, screen: pygame.surface, tileSize: tuple[int,int], topbarheight: int) -> tuple[TileMap, Character]:
-        res = importlib.import_module(f"resources.level{level}")
-        cols, rows = res.MAP_COLS, res.MAP_ROWS
+        try:
+            res = importlib.import_module(f"resources.level{level}")
+        except ModuleNotFoundError:
+            print(f"[Warning] resources.level{level} not found. Loading default empty map.")
+            res = None
+
+        cols = getattr(res, "MAP_COLS", 10)
+        rows = getattr(res, "MAP_ROWS", 10)
+        player_spawn = getattr(res, "PLAYER_SPAWN", (0, 0))
+        level_map = getattr(res, "LEVEL_MAP", [[0] * cols for _ in range(rows)])
+        
+        apple_pos = getattr(res, "APPLE_POS", [])
+        key_pos = getattr(res, "KEY_POS", [])
+        chest_pos = getattr(res, "CHEST_POS", [])
 
         tileMap = TileMap(screen, rows, cols, tileSize, topbarheight)
-        player = Character(screen, Vector2(res.PLAYER_SPAWN), tileSize, topbarheight)
+        player = Character(screen, Vector2(player_spawn), tileSize, topbarheight)
         
 
         for i in range(0, rows):
             for j in range(0, cols):
-                tileMap.addTile((i, j), res.LEVEL_MAP[i][j] == 1)
+                tileMap.addTile((i, j), level_map[i][j] == 1)
 
-        for pos in res.APPLE_POS:
+        for pos in apple_pos:
             tileMap.tilesDictionary[pos].hasApple = True
-        for pos in res.KEY_POS:
+        for pos in key_pos:
             tileMap.tilesDictionary[pos].hasKey = True
-        for pos in res.CHEST_POS:
+        for pos in chest_pos:
             tileMap.tilesDictionary[pos].hasChest = True
         
 

@@ -14,7 +14,7 @@ from helpers.assetsGetter import get_pixels_font
 from settings import WIDTH, HEIGHT, FPS, BG, ROWS, COLUMNS, TOPBARHEIGHT, FOOTERHEIGHT
 
 
-async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x: int, y: int, inp_color: pygame.color):
+async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x: int, y: int, inp_color: pygame.color = (255,255,255)):
     textLabel = render_text_with_outline(
         fontType=font,
         text= inp_text,
@@ -24,7 +24,7 @@ async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x:
     screen.blit(textLabel, textRect)
 
 
-async def game_scene(screen, clock, level: int):
+async def game_scene(screen, clock, level: int = 1):
     tileSize = Vector2(WIDTH // COLUMNS, HEIGHT // ROWS)
     infoFont = pygame.font.Font(get_pixels_font() , 20)
 
@@ -50,6 +50,12 @@ async def game_scene(screen, clock, level: int):
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_r:
                     debug = not debug
+                if level > 1 and e.key == pygame.K_q:
+                    level -= 1
+                    tileMap, player = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
+                if level < 6 and e.key == pygame.K_e:
+                    level += 1
+                    tileMap, player = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
 
                 if e.key == pygame.K_a and player.coordinate.x > 0 and not tileMap.tilesDictionary[(player.coordinate.x - 1, player.coordinate.y)].isObstacle:
                     await player.move_left()
@@ -66,62 +72,58 @@ async def game_scene(screen, clock, level: int):
 
 
         # THIS PART IS USED TO DRAW TEXT TO THE SCREEN
-        # Debug tip text
         await draw_text(
-            screen, 
-            infoFont, 
-            "(R) Debug Mode "+ ("On" if debug else "Off"), 
-            WIDTH * 1 / 5,  
+            screen,
+            infoFont,
+            "Level " + str(level),
+            WIDTH // 2,  
             TOPBARHEIGHT // 2,
             (255, 255, 255)
         )
 
-        # Moving tip
         await draw_text(
-            screen,
-            infoFont,
-            "WASD: Move",
-            WIDTH * 2.5 / 5,  
+            screen, infoFont,
+            "Previous level (Q)",
+            WIDTH * 4 / 5,  
             TOPBARHEIGHT // 2,
-            (255, 255, 255)
         )
+
+        await draw_text(
+            screen, infoFont,
+            "Next level (E)",
+            WIDTH * 1 / 5,  
+            TOPBARHEIGHT // 2,
+        )
+
 
         # Total Score
         player_score = player.appleCount + player.chestCount * 2
         await draw_text(
-            screen,
-            infoFont,
+            screen, infoFont,
             "Score: " + str(player_score),
             WIDTH * 1 / 5,  
             TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
-            (255, 255, 255)
         )
 
         await draw_text(
-            screen,
-            infoFont,
+            screen, infoFont,
             "Apple: " + str(player.appleCount),
             WIDTH * 2 / 5,  
             TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
-            (255, 255, 255)
         )
 
         await draw_text(
-            screen,
-            infoFont,
+            screen, infoFont,
             "Key: " + str(player.keyCount),
             WIDTH * 3 / 5,  
             TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
-            (255, 255, 255)
         )
 
         await draw_text(
-            screen,
-            infoFont,
+            screen, infoFont,
             "Chest: " + str(player.chestCount),
             WIDTH * 4 / 5,  
             TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
-            (255, 255, 255)
         )
 
 
@@ -165,7 +167,7 @@ async def main():
     screen = pygame.display.set_mode((WIDTH,HEIGHT + TOPBARHEIGHT + FOOTERHEIGHT))
     clock = pygame.time.Clock()
 
-    await game_scene(screen, clock, 1)
+    await game_scene(screen, clock)
 
 
 if __name__ == "__main__":
