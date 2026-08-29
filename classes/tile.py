@@ -10,17 +10,14 @@ from helpers.customTextRender import render_text_with_outline
 class Tile:
     def __init__(
             self, surface: pygame.Surface, coordinate: Vector2, 
-            tileSize: Vector2 =  Vector2(50,50), color: pygame.Color = (255,255,255), 
-            outline: int = 0, isObstacle: bool = False, obstacleColor = (0,0,0),
+            tileSize: Vector2 =  Vector2(50,50),
+            isObstacle: bool = False,
             topbarHeight: int = 0
             ):
         self.surface = surface
         self.coordinate = coordinate
         self.tileSize = tileSize
-        self.color = color
-        self.outline = outline
         self.isObstacle = isObstacle
-        self.obstacleColor = obstacleColor
         self.grass_path = ""
         self.topbarHeight = topbarHeight
 
@@ -74,11 +71,3 @@ class Tile:
     def draw(self, debug: bool = False):
         # 1. Base tile sprite
         self.surface.blit(self.image, self.rect)
-
-
-
-    def draw_highlight(self):
-        if self.isObstacle:
-            pygame.draw.rect(self.surface, (255,0,0), (self.rectStartPos.x, self.rectStartPos.y + self.topbarHeight, self.tileSize.x, self.tileSize.y), self.outline)
-        else:
-            pygame.draw.rect(self.surface, (0,255,255), (self.rectStartPos.x, self.rectStartPos.y + self.topbarHeight, self.tileSize.x, self.tileSize.y), self.outline)

@@ -36,14 +36,14 @@ class TileMap:
 
 
     def addTile(self, 
-            tileCoordinate: Vector2, tileColor: pygame.Color = (255,255,255), 
-            outline: int = 0, isObstacle: bool = False, obstacleColor: pygame.Color = (0,0,0)
+            tileCoordinate: Vector2,
+            isObstacle: bool = False
         ) -> bool:
         if self.tileIsInMap(tileCoordinate):
             # print("Tiles at", Vector2(tileCoordinate), "is in map")
             return False
 
-        newTile = Tile(self.surface, Vector2(tileCoordinate), self.tileSize, tileColor, outline, isObstacle, obstacleColor, self.topbarHeight)
+        newTile = Tile(self.surface, Vector2(tileCoordinate), self.tileSize, isObstacle, self.topbarHeight)
         self.tilesDictionary[tileCoordinate] = newTile
         return True
 

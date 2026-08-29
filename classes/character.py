@@ -12,6 +12,7 @@ class Character:
         self.isWalking = False
         self.facingRight = True
         self.topbarHeight = topbarHeight
+        self.moveCount = 0
 
         # Timer to track accumulated time
         self.animationTimer = 0.0
@@ -31,6 +32,7 @@ class Character:
         self.rectStartPos = translateCoordinateToPixel(self.coordinate, self.tileSize)
         self.rect = pygame.Rect(self.rectStartPos.x, self.rectStartPos.y + self.topbarHeight, self.tileSize.x, self.tileSize.y)
 
+        self.moveCount += 1
         self.isWalking = True
         self.walkTimer = self.walkDuration
 
