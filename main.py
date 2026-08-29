@@ -5,9 +5,11 @@ from classes.character import Character
 from classes.tile import Tile
 from classes.tilemap import TileMap
 from classes.uiButton import UIButton
+from classes.levelManager import LevelManager
 from helpers.pixelTranslate import translatePixelToCoordinate
 from helpers.customTextRender import render_text_with_outline
 from helpers.assetsGetter import get_pixels_font
+
 
 from settings import WIDTH, HEIGHT, FPS, BG, ROWS, COLUMNS, TOPBARHEIGHT, FOOTERHEIGHT
 
@@ -22,38 +24,11 @@ async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x:
     screen.blit(textLabel, textRect)
 
 
-async def game_scene(screen, clock):
+async def game_scene(screen, clock, level: int):
     tileSize = Vector2(WIDTH // COLUMNS, HEIGHT // ROWS)
-    tileMap = TileMap(screen, ROWS, COLUMNS, tileSize, TOPBARHEIGHT)
-    player_spawn = Vector2(tileMap.columns // 2, tileMap.rows // 2)
-    chance_for_obstacle = 0.2
-
     infoFont = pygame.font.Font(get_pixels_font() , 20)
 
-
-
-    for i in range(tileMap.rows):
-        for j in range(tileMap.columns):
-
-            # tileColor = (
-            #     random.randint(0, 255),
-            #     random.randint(0, 255),
-            #     random.randint(0, 255),
-            # )
-            tileColor = (150, 0, 0)
-            obstacleColor = (100, 100, 100)
-
-            # Evaluates to 1 if random float < 0.20, otherwise 0
-            is_obstacle = 1 if random.random() < chance_for_obstacle else 0
-            if player_spawn.x == i and player_spawn.y == j:
-                is_obstacle = 0
-
-            tileMap.addTile((i, j), tileColor, 3, is_obstacle, obstacleColor)
-
-
-    goal = player_spawn
-    #  Init animals
-    player = Character(screen, player_spawn, tileSize, TOPBARHEIGHT)
+    tileMap, player = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
 
 
     running = True
@@ -137,12 +112,12 @@ async def main():
     pygame.init()
     mixer.init()
 
-    pygame.display.set_caption("A* algorithm")
+    pygame.display.set_caption("Classical Reinforcement Learning")
 
     screen = pygame.display.set_mode((WIDTH,HEIGHT + TOPBARHEIGHT + FOOTERHEIGHT))
     clock = pygame.time.Clock()
 
-    await game_scene(screen, clock)
+    await game_scene(screen, clock, 1)
 
 
 if __name__ == "__main__":
