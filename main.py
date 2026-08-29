@@ -42,7 +42,7 @@ async def game_scene(screen, clock, level: int):
         target = pygame.mouse.get_pos()
         mouse_buttons = pygame.mouse.get_pressed()
     
-
+        # INPUT GETTING
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 running = False       
@@ -87,21 +87,31 @@ async def game_scene(screen, clock, level: int):
         )
 
 
+        # Check if player collected anything.
+        tilePlayerOn = tileMap.tilesDictionary[tuple(player.coordinate)]
+        if tilePlayerOn.hasApple:
+            tilePlayerOn.hasApple = False
+            player.appleCount += 1
+        if tilePlayerOn.hasKey:
+            tilePlayerOn.hasKey = False
+            player.keyCount += 1
+        if tilePlayerOn.hasChest and player.keyCount > 0:
+            # tilePlayerOn.hasChest = False
+            tilePlayerOn.chestOpened = True
+            player.chestCount += 1
+            player.keyCount -= 1
+
 
 
         # if debug:
         #     # nothing yet
         #     print("debug")
-
         player.update(dt)
-
         tileMap.draw(debug)
-
         player.draw()
 
         
         await asyncio.sleep(0)
-        
         pygame.display.flip()
 
     pygame.quit()

@@ -13,6 +13,9 @@ class Character:
         self.facingRight = True
         self.topbarHeight = topbarHeight
         self.moveCount = 0
+        self.appleCount = 0
+        self.keyCount = 0
+        self.chestCount = 0
 
         # Timer to track accumulated time
         self.animationTimer = 0.0

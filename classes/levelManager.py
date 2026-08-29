@@ -32,26 +32,12 @@ class LevelManager:
             for j in range(0, cols):
                 tileMap.addTile((i, j), res.LEVEL_MAP[i][j] == 1)
 
-
-
-                # print(resGrid[i + 1][j], end=" ")
-            # print("\n")
+        for pos in res.APPLE_POS:
+            tileMap.tilesDictionary[pos].hasApple = True
+        for pos in res.KEY_POS:
+            tileMap.tilesDictionary[pos].hasKey = True
+        for pos in res.CHEST_POS:
+            tileMap.tilesDictionary[pos].hasChest = True
+        
 
         return (tileMap, player)
-
-    # def get_random_image_in_folder(folder_path: str) -> str:
-    # # 1. Get a list of all files in the folder that end with .png
-    #     png_files = [
-    #         file for file in os.listdir(folder_path) if file.lower().endswith(".png")
-    #     ]
-
-    #     # 2. Check if any PNG files were found
-    #     if not png_files:
-    #         raise FileNotFoundError(f"No PNG files found in {folder_path}")
-
-    #     # 3. Choose a random file name
-    #     chosen_file = random.choice(png_files)
-
-    #     # 4. Join the folder path and file name to create the full path
-    #     return os.path.join(folder_path, chosen_file)
-

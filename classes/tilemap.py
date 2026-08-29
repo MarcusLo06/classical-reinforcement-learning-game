@@ -60,7 +60,7 @@ class TileMap:
     def draw(self, debug: bool = False):
         for tile in self.tilesDictionary.values():
             tile.draw(debug)
-            tile.refresh_path()
+            tile.refresh_image()
 
         if self.selectedTile:
             self.selectedTile.draw_highlight()

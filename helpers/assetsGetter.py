@@ -44,3 +44,15 @@ def get_random_water_and_obstacle_image(chance_for_obstacle: float = 1) -> str:
 
 def get_pixels_font() -> str:
     return "assets/fonts/BoldPixels.ttf"
+
+def get_apple_path_image() -> str:
+    return "assets/objects/apple.png"
+
+def get_key_path_image() -> str:
+    return "assets/objects/key.png"
+
+def get_chest_path_image(state: bool = False) -> str:
+    if state  == False:
+        return "assets/objects/chest_closed.png"
+    else:
+        return "assets/objects/chest_opened.png"
