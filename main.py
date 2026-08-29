@@ -86,6 +86,44 @@ async def game_scene(screen, clock, level: int):
             (255, 255, 255)
         )
 
+        # Total Score
+        player_score = player.appleCount + player.chestCount * 2
+        await draw_text(
+            screen,
+            infoFont,
+            "Score: " + str(player_score),
+            WIDTH * 1 / 5,  
+            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
+            (255, 255, 255)
+        )
+
+        await draw_text(
+            screen,
+            infoFont,
+            "Apple: " + str(player.appleCount),
+            WIDTH * 2 / 5,  
+            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
+            (255, 255, 255)
+        )
+
+        await draw_text(
+            screen,
+            infoFont,
+            "Key: " + str(player.keyCount),
+            WIDTH * 3 / 5,  
+            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
+            (255, 255, 255)
+        )
+
+        await draw_text(
+            screen,
+            infoFont,
+            "Chest: " + str(player.chestCount),
+            WIDTH * 4 / 5,  
+            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
+            (255, 255, 255)
+        )
+
 
         # Check if player collected anything.
         tilePlayerOn = tileMap.tilesDictionary[tuple(player.coordinate)]
