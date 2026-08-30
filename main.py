@@ -22,6 +22,17 @@ async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x:
     )
     textRect = textLabel.get_rect(center=(x, y))
     screen.blit(textLabel, textRect)
+    
+# Check if the level has been cleared
+def allRewardsCollected (tileMap) :
+    for tile in tileMap.tilesDictionary.values() :
+        if tile.hasApple :
+            return False
+
+        if tile.hasChest and not tile.chestOpened :
+            return False
+
+    return True
 
 
 async def game_scene(screen, clock, level: int = 1):
@@ -33,6 +44,7 @@ async def game_scene(screen, clock, level: int = 1):
 
     running = True
     debug = False
+    levelComplete = False
 
 
     while running:
@@ -52,33 +64,52 @@ async def game_scene(screen, clock, level: int = 1):
                     debug = not debug
                 if level > 1 and e.key == pygame.K_q:
                     level -= 1
-                    tileMap, player = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
+                    tileMap, player = await LevelManager().loadLevel(
+                        level,
+                        screen,
+                        tileSize,
+                        TOPBARHEIGHT
+                    )
+                    levelComplete = False
                 if level < 6 and e.key == pygame.K_e:
                     level += 1
-                    tileMap, player = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
+                    tileMap, player = await LevelManager().loadLevel(
+                        level,
+                        screen,
+                        tileSize,
+                        TOPBARHEIGHT
+                    )
+                    levelComplete = False
 
-                if e.key == pygame.K_a and player.coordinate.x > 0 and not tileMap.tilesDictionary[(player.coordinate.x - 1, player.coordinate.y)].isObstacle:
-                    await player.move_left()
-                if e.key == pygame.K_d and player.coordinate.x < COLUMNS - 1 and not tileMap.tilesDictionary[(player.coordinate.x + 1, player.coordinate.y)].isObstacle:
-                    await player.move_right()
-                if e.key == pygame.K_w and player.coordinate.y > 0 and not tileMap.tilesDictionary[(player.coordinate.x, player.coordinate.y - 1)].isObstacle:
-                    await player.move_up()
-                if e.key == pygame.K_s and player.coordinate.y < ROWS - 1 and not tileMap.tilesDictionary[(player.coordinate.x, player.coordinate.y + 1)].isObstacle:
-                    await player.move_down()
+                if not levelComplete :
+                    if e.key == pygame.K_a and player.coordinate.x > 0 and not tileMap.tilesDictionary[(player.coordinate.x - 1, player.coordinate.y)].isObstacle:
+                        await player.move_left()
+                    if e.key == pygame.K_d and player.coordinate.x < COLUMNS - 1 and not tileMap.tilesDictionary[(player.coordinate.x + 1, player.coordinate.y)].isObstacle:
+                        await player.move_right()
+                    if e.key == pygame.K_w and player.coordinate.y > 0 and not tileMap.tilesDictionary[(player.coordinate.x, player.coordinate.y - 1)].isObstacle:
+                        await player.move_up()
+                    if e.key == pygame.K_s and player.coordinate.y < ROWS - 1 and not tileMap.tilesDictionary[(player.coordinate.x, player.coordinate.y + 1)].isObstacle:
+                        await player.move_down()
                 
 
 
         screen.fill(BG)
 
+        if levelComplete :
+            levelText = "Level Complete"
+            levelTextColor = (255, 215, 0)
+        else :
+            levelText = "Level " + str(level)
+            levelTextColor = (255, 255, 255)
 
         # THIS PART IS USED TO DRAW TEXT TO THE SCREEN
         await draw_text(
             screen,
             infoFont,
-            "Level " + str(level),
+            levelText,
             WIDTH // 2,  
             TOPBARHEIGHT // 2,
-            (255, 255, 255)
+            levelTextColor
         )
 
         await draw_text(
@@ -129,17 +160,32 @@ async def game_scene(screen, clock, level: int = 1):
 
         # Check if player collected anything.
         tilePlayerOn = tileMap.tilesDictionary[tuple(player.coordinate)]
+        # Reset level when the player enters a hazard tile
+        if tilePlayerOn.hasHazard:
+            tileMap, player = await LevelManager().loadLevel(
+                level,
+                screen,
+                tileSize,
+                TOPBARHEIGHT
+            )
+            levelComplete = False
+            continue
         if tilePlayerOn.hasApple:
             tilePlayerOn.hasApple = False
             player.appleCount += 1
         if tilePlayerOn.hasKey:
             tilePlayerOn.hasKey = False
             player.keyCount += 1
-        if tilePlayerOn.hasChest and player.keyCount > 0:
-            # tilePlayerOn.hasChest = False
+        if (
+            tilePlayerOn.hasChest
+            and not tilePlayerOn.chestOpened
+            and player.keyCount > 0
+        ) :
             tilePlayerOn.chestOpened = True
             player.chestCount += 1
             player.keyCount -= 1
+
+        levelComplete = allRewardsCollected(tileMap)
 
 
 

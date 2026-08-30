@@ -24,6 +24,8 @@ class Tile:
         self.hasKey = False
         self.hasChest = False
         self.chestOpened = False
+        # Hazard tiles use the water image so they are easy to identify
+        self.hasHazard = False
 
         self.rectStartPos = translateCoordinateToPixel(self.coordinate, tileSize)
         self.rect = pygame.Rect(self.rectStartPos.x, self.rectStartPos.y + topbarHeight, self.tileSize.x, self.tileSize.y)
@@ -45,12 +47,24 @@ class Tile:
         grass_image = pygame.transform.scale(grass_image, self.tileSize)
 
 
-        if (self.isObstacle or self.hasApple or self.hasKey or self.hasChest):
-            # Load the obstacle overlay image
-            if self.isObstacle: image_path  = self.obstacle_image_path
-            elif self.hasApple: image_path = get_apple_path_image()
-            elif self.hasKey: image_path = get_key_path_image()
-            elif self.hasChest: image_path = get_chest_path_image(self.chestOpened)
+        if (
+            self.isObstacle
+            or self.hasApple
+            or self.hasKey
+            or self.hasChest
+            or self.hasHazard
+        ):
+            # Select the image for an obstacle, hazard, or collectible item
+            if self.isObstacle:
+                image_path = self.obstacle_image_path
+            elif self.hasHazard:
+                image_path = get_random_water_image()
+            elif self.hasApple:
+                image_path = get_apple_path_image()
+            elif self.hasKey:
+                image_path = get_key_path_image()
+            elif self.hasChest:
+                image_path = get_chest_path_image(self.chestOpened)
 
             raw_obstacle = pygame.image.load(image_path).convert_alpha()
             

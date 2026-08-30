@@ -15,16 +15,6 @@ LEVEL_MAP = [
 ]
 
 PLAYER_SPAWN = (0, 0)
-
-APPLE_POS = [(9, 0)]
+APPLE_POS = [(9, 9)]
 KEY_POS = []
 CHEST_POS = []
-
-HAZARD_POS = [
-    (3, 0),
-    (4, 0),
-    (5, 0),
-    (6, 0),
-    (7, 0),
-    (8, 0)
-]

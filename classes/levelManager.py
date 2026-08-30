@@ -35,6 +35,7 @@ class LevelManager:
         apple_pos = getattr(res, "APPLE_POS", [])
         key_pos = getattr(res, "KEY_POS", [])
         chest_pos = getattr(res, "CHEST_POS", [])
+        hazard_pos = getattr(res, "HAZARD_POS", [])
 
         tileMap = TileMap(screen, rows, cols, tileSize, topbarheight)
         player = Character(screen, Vector2(player_spawn), tileSize, topbarheight)
@@ -50,6 +51,9 @@ class LevelManager:
             tileMap.tilesDictionary[pos].hasKey = True
         for pos in chest_pos:
             tileMap.tilesDictionary[pos].hasChest = True
+        # Mark hazard tiles and display with the water image
+        for pos in hazard_pos:
+            tileMap.tilesDictionary[pos].hasHazard = True
         
 
         return (tileMap, player)
