@@ -115,14 +115,14 @@ async def game_scene(screen, clock, level: int = 1):
         await draw_text(
             screen, infoFont,
             "Previous level (Q)",
-            WIDTH * 4 / 5,  
+            WIDTH * 1 / 5,  
             TOPBARHEIGHT // 2,
         )
 
         await draw_text(
             screen, infoFont,
             "Next level (E)",
-            WIDTH * 1 / 5,  
+            WIDTH * 4 / 5,  
             TOPBARHEIGHT // 2,
         )
 

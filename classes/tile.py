@@ -32,7 +32,7 @@ class Tile:
 
         self.grass_path = get_random_grass_image()
         self.obstacle_image_path = get_random_water_and_obstacle_image(1)
-
+        self.water_image_path = get_random_water_image()
 
         self.flipObstacle = random.random() < 0.5
         self.weigthFont = pygame.font.Font(get_pixels_font() , 15)
@@ -58,7 +58,7 @@ class Tile:
             if self.isObstacle:
                 image_path = self.obstacle_image_path
             elif self.hasHazard:
-                image_path = get_random_water_image()
+                image_path = self.water_image_path
             elif self.hasApple:
                 image_path = get_apple_path_image()
             elif self.hasKey:
