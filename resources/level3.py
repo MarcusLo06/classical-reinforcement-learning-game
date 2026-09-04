@@ -23,3 +23,4 @@ APPLE_POS = [
 
 KEY_POS = [(9, 0)]
 CHEST_POS = [(0, 9)]
+MONSTER_POS = [(9,9)]

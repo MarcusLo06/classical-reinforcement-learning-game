@@ -13,6 +13,66 @@ from helpers.assetsGetter import get_pixels_font
 
 from settings import WIDTH, HEIGHT, FPS, BG, ROWS, COLUMNS, TOPBARHEIGHT, FOOTERHEIGHT
 
+DIRECTIONS = {
+    "left": (-1, 0, "move_left"),
+    "right": (1, 0, "move_right"),
+    "up": (0, -1, "move_up"),
+    "down": (0, 1, "move_down"),
+}
+
+KEY_MAP = {
+    pygame.K_a: "left",
+    pygame.K_d: "right",
+    pygame.K_w: "up",
+    pygame.K_s: "down",
+}
+
+
+def is_valid_tile(x: int, y: int, tileMap, columns: int, rows: int) -> bool:
+    """Checks bounds and obstacles for a target coordinate."""
+    if not (0 <= x < columns and 0 <= y < rows):
+        return False
+    tile = tileMap.tilesDictionary.get((x, y))
+    return tile is not None and not tile.isObstacle
+
+
+async def onMove(
+    player: Character,
+    monsters: list[Character],
+    player_direction: str,
+    tileMap,
+    columns: int,
+    rows: int,
+):
+    # 1. Player Move Check & Execution
+    p_dx, p_dy, p_method = DIRECTIONS[player_direction]
+    target_px = player.coordinate.x + p_dx
+    target_py = player.coordinate.y + p_dy
+
+    if is_valid_tile(target_px, target_py, tileMap, columns, rows):
+        await getattr(player, p_method)()
+
+    # 2. Monster Move Checks & Execution
+    monster_tasks = []
+    for monster in monsters:
+        if random.random() <= 0.5:
+            # Pick only from valid directions around the monster
+            valid_dirs = []
+            for dir_name, (dx, dy, method_name) in DIRECTIONS.items():
+                mx = monster.coordinate.x + dx
+                my = monster.coordinate.y + dy
+                if is_valid_tile(mx, my, tileMap, columns, rows):
+                    valid_dirs.append(method_name)
+
+            if valid_dirs:
+                chosen_move = random.choice(valid_dirs)
+                monster_tasks.append(getattr(monster, chosen_move)())
+
+    # Execute all valid monster moves concurrently
+    if monster_tasks:
+        await asyncio.gather(*monster_tasks)
+
+
 
 async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x: int, y: int, inp_color: pygame.color = (255,255,255)):
     textLabel = render_text_with_outline(
@@ -39,7 +99,7 @@ async def game_scene(screen, clock, level: int = 1):
     tileSize = Vector2(WIDTH // COLUMNS, HEIGHT // ROWS)
     infoFont = pygame.font.Font(get_pixels_font() , 20)
 
-    tileMap, player = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
+    tileMap, player, monsters = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
 
 
     running = True
@@ -64,7 +124,7 @@ async def game_scene(screen, clock, level: int = 1):
                     debug = not debug
                 if level > 1 and e.key == pygame.K_q:
                     level -= 1
-                    tileMap, player = await LevelManager().loadLevel(
+                    tileMap, player, monsters = await LevelManager().loadLevel(
                         level,
                         screen,
                         tileSize,
@@ -73,7 +133,7 @@ async def game_scene(screen, clock, level: int = 1):
                     levelComplete = False
                 if level < 6 and e.key == pygame.K_e:
                     level += 1
-                    tileMap, player = await LevelManager().loadLevel(
+                    tileMap, player, monsters = await LevelManager().loadLevel(
                         level,
                         screen,
                         tileSize,
@@ -81,21 +141,21 @@ async def game_scene(screen, clock, level: int = 1):
                     )
                     levelComplete = False
 
-                if not levelComplete :
-                    if e.key == pygame.K_a and player.coordinate.x > 0 and not tileMap.tilesDictionary[(player.coordinate.x - 1, player.coordinate.y)].isObstacle:
-                        await player.move_left()
-                    if e.key == pygame.K_d and player.coordinate.x < COLUMNS - 1 and not tileMap.tilesDictionary[(player.coordinate.x + 1, player.coordinate.y)].isObstacle:
-                        await player.move_right()
-                    if e.key == pygame.K_w and player.coordinate.y > 0 and not tileMap.tilesDictionary[(player.coordinate.x, player.coordinate.y - 1)].isObstacle:
-                        await player.move_up()
-                    if e.key == pygame.K_s and player.coordinate.y < ROWS - 1 and not tileMap.tilesDictionary[(player.coordinate.x, player.coordinate.y + 1)].isObstacle:
-                        await player.move_down()
+                if not levelComplete and e.key in KEY_MAP:
+                    await onMove(
+                        player,
+                        monsters,
+                        KEY_MAP[e.key],
+                        tileMap,
+                        COLUMNS,
+                        ROWS,
+                    )
                 
 
 
         screen.fill(BG)
 
-        if levelComplete :
+        if levelComplete:
             levelText = "Level Complete"
             levelTextColor = (255, 215, 0)
         else :
@@ -161,8 +221,8 @@ async def game_scene(screen, clock, level: int = 1):
         # Check if player collected anything.
         tilePlayerOn = tileMap.tilesDictionary[tuple(player.coordinate)]
         # Reset level when the player enters a hazard tile
-        if tilePlayerOn.hasHazard:
-            tileMap, player = await LevelManager().loadLevel(
+        if tilePlayerOn.hasHazard or any(m.coordinate == player.coordinate for m in monsters):
+            tileMap, player, monsters = await LevelManager().loadLevel(
                 level,
                 screen,
                 tileSize,
@@ -192,9 +252,13 @@ async def game_scene(screen, clock, level: int = 1):
         # if debug:
         #     # nothing yet
         #     print("debug")
-        player.update(dt)
+        await player.update(dt)
         tileMap.draw(debug)
         player.draw()
+
+        for monster in monsters:
+            await monster.update(dt)
+            monster.draw()
 
         
         await asyncio.sleep(0)

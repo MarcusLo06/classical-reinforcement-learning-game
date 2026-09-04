@@ -1,10 +1,10 @@
 import pygame, asyncio
-from helpers.assetsGetter import get_character_idle_image, get_character_walking_image
+from helpers.assetsGetter import get_character_idle_image, get_character_walking_image, get_monster_idle_image, get_monster_walking_image
 from helpers.pixelTranslate import translateCoordinateToPixel
 from pygame.math import Vector2
 
 class Character:
-    def __init__(self, surface: pygame.surface, coordinate: Vector2 = (0,0), tileSize: Vector2 = Vector2(16, 16), topbarHeight: int = 0):
+    def __init__(self, surface: pygame.surface, coordinate: Vector2 = (0,0), tileSize: Vector2 = Vector2(16, 16), topbarHeight: int = 0, isPlayer: bool = False):
         self.surface = surface
         self.coordinate = coordinate
         self.tileSize = tileSize
@@ -17,6 +17,8 @@ class Character:
         self.keyCount = 0
         self.chestCount = 0
 
+        self.isPlayer = isPlayer
+
         # Timer to track accumulated time
         self.animationTimer = 0.0
 
@@ -25,7 +27,7 @@ class Character:
 
         # Load initial image
         self.image = pygame.image.load(
-            get_character_idle_image()
+            get_character_idle_image() if self.isPlayer else get_monster_idle_image()
         ).convert_alpha()
 
         self.rectStartPos = translateCoordinateToPixel(self.coordinate, tileSize)
@@ -60,7 +62,7 @@ class Character:
         await self.on_move()
 
 
-    def update(self, dt: float):
+    async def update(self, dt: float):
         # 1. Handle walking duration buffer
         if self.isWalking:
             self.walkTimer -= dt
@@ -69,7 +71,7 @@ class Character:
                 self.walkTimer = 0.0
                 # Force immediate update to idle image when walking stops
                 raw_image = pygame.image.load(
-                    get_character_idle_image()
+                    get_character_idle_image() if self.isPlayer else get_monster_idle_image()
                 ).convert_alpha()
                 self.image = pygame.transform.scale(raw_image, self.tileSize)
 
@@ -80,11 +82,11 @@ class Character:
 
             if self.isWalking:
                 raw_image = pygame.image.load(
-                    get_character_walking_image()
+                    get_character_walking_image() if self.isPlayer else get_monster_walking_image()
                 ).convert_alpha()
             else:
                 raw_image = pygame.image.load(
-                    get_character_idle_image()
+                    get_character_idle_image() if self.isPlayer else get_monster_idle_image()
                 ).convert_alpha()
 
             scaled_image = pygame.transform.scale(raw_image, self.tileSize)

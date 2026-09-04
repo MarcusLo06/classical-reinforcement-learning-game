@@ -52,7 +52,7 @@ async def qLearningDemo():
         HEIGHT // ROWS
     )
 
-    tileMap, player = await LevelManager().loadLevel(
+    tileMap, player, monsters = await LevelManager().loadLevel(
         0,
         screen,
         tileSize,

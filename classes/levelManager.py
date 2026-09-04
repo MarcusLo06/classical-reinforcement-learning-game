@@ -20,7 +20,7 @@ class LevelManager:
 
 
 
-    async def loadLevel(self, level: int, screen: pygame.surface, tileSize: tuple[int,int], topbarheight: int) -> tuple[TileMap, Character]:
+    async def loadLevel(self, level: int, screen: pygame.surface, tileSize: tuple[int,int], topbarheight: int) -> tuple[TileMap, Character, list[Character]]:
         try:
             res = importlib.import_module(f"resources.level{level}")
         except ModuleNotFoundError:
@@ -36,10 +36,15 @@ class LevelManager:
         key_pos = getattr(res, "KEY_POS", [])
         chest_pos = getattr(res, "CHEST_POS", [])
         hazard_pos = getattr(res, "HAZARD_POS", [])
+        monster_pos = getattr(res, "MONSTER_POS", [])
 
         tileMap = TileMap(screen, rows, cols, tileSize, topbarheight)
-        player = Character(screen, Vector2(player_spawn), tileSize, topbarheight)
-        
+        player = Character(screen, Vector2(player_spawn), tileSize, topbarheight, True)
+        monsters = []
+        for pos in monster_pos:
+            monster = Character(screen, Vector2(pos), tileSize, topbarheight)
+            monsters.append(monster)
+
 
         for i in range(0, rows):
             for j in range(0, cols):
@@ -56,4 +61,4 @@ class LevelManager:
             tileMap.tilesDictionary[pos].hasHazard = True
         
 
-        return (tileMap, player)
+        return (tileMap, player, monsters)

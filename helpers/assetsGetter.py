@@ -32,6 +32,12 @@ def get_character_idle_image() -> str:
 def get_character_walking_image() -> str:
     return get_random_image_in_folder("assets/character/walking")
 
+def get_monster_idle_image() -> str:
+    return get_random_image_in_folder("assets/monster/idle")
+
+def get_monster_walking_image() -> str:
+    return get_random_image_in_folder("assets/monster/walking")
+
 def get_random_path_image() -> str:
     return get_random_image_in_folder("assets/path/")
 
