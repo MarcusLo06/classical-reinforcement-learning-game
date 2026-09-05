@@ -276,7 +276,7 @@ async def game_scene(screen, clock, level: int = 1):
         # Total Score
         player_score = player.appleCount + player.chestCount * 2
 
-        bottom_text = "(T) Reinforcement Learning Algorithm: " + ("None" if RLAlgor == 0 else "Q-Learning" if RLAlgor == 1 else "SARSA") + " - Running: " + str(runAgent)
+        bottom_text = "(T) Reinforcement Learning Algorithm: " + ("None" if RLAlgor == 0 else "Q-Learning" if RLAlgor == 1 else "SARSA") + " - (SPACE) Running: " + str(runAgent)
         await draw_text(
             screen, infoFont,
             bottom_text,
