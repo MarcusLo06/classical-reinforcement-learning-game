@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 
 from helpers.agentHelper import saveTrainingResults
-from sarsa.sarsaTraining import sarsaTraining, evaluateSARSA
+from sarsa.sarsaAgent import sarsaTraining, evaluateSARSA
 
 def movingAverage (values, window = 50) :
     averages = []

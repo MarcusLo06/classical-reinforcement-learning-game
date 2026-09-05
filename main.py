@@ -8,6 +8,7 @@ from classes.uiButton import UIButton
 from classes.worldEnvironment import WorldEnvironment
 from classes.levelManager import LevelManager
 from qlearning.qLearningAgent import getQLearningAgent
+from sarsa.sarsaAgent import getSARSAAgent
 from helpers.pixelTranslate import translatePixelToCoordinate
 from helpers.customTextRender import render_text_with_outline
 from helpers.assetsGetter import get_pixels_font
@@ -104,14 +105,20 @@ def allRewardsCollected (tileMap) :
     return True
 
 
-async def onLevelLoad(level: int, screen: pygame.surface, tileSize: Vector2, topbarHeight: int):
+async def onLevelLoad(level: int, screen: pygame.surface, tileSize: Vector2, topbarHeight: int, RLAlgor: int):
     tileMap, player, monsters = await LevelManager().loadLevel(
         level,
         screen,
         tileSize,
         TOPBARHEIGHT
     )
-    agent, results = await getQLearningAgent(level, True)
+
+    if RLAlgor == 1:
+        agent, results = await getQLearningAgent(level, True)
+    elif RLAlgor == 2:
+        agent, results = await getSARSAAgent(level, True)
+    else:
+        agent = None
 
     return tileMap, player, monsters, agent
 
@@ -122,17 +129,17 @@ async def game_scene(screen, clock, level: int = 1):
     tileSize = Vector2(WIDTH // COLUMNS, HEIGHT // ROWS)
     infoFont = pygame.font.Font(get_pixels_font() , 20)
 
-    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT)
+    RLAlgor = 0
+    environment = WorldEnvironment(level)
+    state = environment.reset()
+    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT, RLAlgor)
 
 
     running = True
     debug = False
     levelComplete = False
-    RLAlgor = 0
+    runAgent = False
 
-
-    environment = WorldEnvironment(level)
-    state = environment.reset()
 
 
 
@@ -159,19 +166,32 @@ async def game_scene(screen, clock, level: int = 1):
                     debug = not debug
                 if e.key == pygame.K_t:
                     RLAlgor = (RLAlgor + 1) % 3
+
+
+                    if RLAlgor == 1:
+                        agent, results = await getQLearningAgent(level, True)
+                    elif RLAlgor == 2:
+                        agent, results = await getSARSAAgent(level, True)
+                if e.key == pygame.K_SPACE:
+                    runAgent = not runAgent
+
                 if level > 1 and e.key == pygame.K_q:
                     level -= 1
 
-                    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT)
+                    environment = WorldEnvironment(level)
+                    state = environment.reset()
+                    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT, RLAlgor)
 
-                    
+                    runAgent = False
                     levelComplete = False
                 if level < 6 and e.key == pygame.K_e:
                     level += 1
 
-                    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT)
+                    environment = WorldEnvironment(level)
+                    state = environment.reset()
+                    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT, RLAlgor)
 
-                    
+                    runAgent = False
                     levelComplete = False
 
                 if not levelComplete and e.key in KEY_MAP:
@@ -187,7 +207,8 @@ async def game_scene(screen, clock, level: int = 1):
 
 
         if (
-            RLAlgor == 1
+            runAgent
+            and RLAlgor != 0
             and not levelComplete
             and currentTime - lastMoveTime >= moveDelay
         ):
@@ -255,7 +276,7 @@ async def game_scene(screen, clock, level: int = 1):
         # Total Score
         player_score = player.appleCount + player.chestCount * 2
 
-        bottom_text = "(T) Reinforcement Learning Algorithm: " + ("None" if RLAlgor == 0 else "Q-Learning" if RLAlgor == 1 else "SARSA")
+        bottom_text = "(T) Reinforcement Learning Algorithm: " + ("None" if RLAlgor == 0 else "Q-Learning" if RLAlgor == 1 else "SARSA") + " - Running: " + str(runAgent)
         await draw_text(
             screen, infoFont,
             bottom_text,

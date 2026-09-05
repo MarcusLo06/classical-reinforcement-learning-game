@@ -1,5 +1,5 @@
 from qlearning.qLearningAgent import qLearningTraining, evaluateQLearning
-from sarsa.sarsaTraining import sarsaTraining, evaluateSARSA
+from sarsa.sarsaAgent import sarsaTraining, evaluateSARSA
 
 if __name__ == "__main__" :
     qLearningAgent, qLearningResults = qLearningTraining(level = 1)

@@ -9,10 +9,10 @@ from helpers.agentHelper import saveQTable, loadQTable, loadTrainingResults
 
 async def getQLearningAgent(level: int = 0, train: bool = False):
     if train:
-        print("Training agent of level", level)
+        print("Training qlearning agent of level", level)
         return qLearningTraining(level)
     else:
-        print("Loading agent of level", level)
+        print("Loading qlearning agent of level", level)
         return qLearningLoad(level)
         
 
@@ -20,8 +20,8 @@ async def getQLearningAgent(level: int = 0, train: bool = False):
 def qLearningLoad(level: int = 0):
     setting = loadSetting()
     agent = QLearning(setting["alpha"], setting["gamma"])
-    agent = loadQTable(agent, level)  # Load the trained Q-values!
-    trainingResults = loadTrainingResults(level)
+    agent = loadQTable(agent, level, 1)  # Load the trained Q-values!
+    trainingResults = loadTrainingResults(1, level)
     return agent, trainingResults
 
 
@@ -79,7 +79,7 @@ def qLearningTraining (level: int = 0):
         })
 
 
-    saveQTable(agent, level)
+    saveQTable(agent, level, 1)
     return agent, trainingResults
 
 def evaluateQLearning(agent, level = 0):

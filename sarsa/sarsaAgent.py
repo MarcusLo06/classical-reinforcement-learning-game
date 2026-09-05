@@ -3,7 +3,24 @@ from classes.worldEnvironment import WorldEnvironment
 from sarsa.sarsa import SARSA
 from helpers.learningPolicy import linearEpsilon
 from helpers.loadSetting import loadSetting
+from helpers.agentHelper import saveQTable, loadQTable, loadTrainingResults
 
+
+async def getSARSAAgent(level: int = 0, train: bool = False):
+    if train:
+        print("Training SARSA agent of level", level)
+        return sarsaTraining(level)
+    else:
+        print("Loading SARSA agent of level", level)
+        return sarsaLoad(level)
+
+
+def sarsaLoad(level: int = 0):
+    setting = loadSetting()
+    agent = SARSA(setting["alpha"], setting["gamma"])
+    agent = loadQTable(agent, level, 2)  # Load the trained Q-values!
+    trainingResults = loadTrainingResults(2, level)
+    return agent, trainingResults
 
 def sarsaTraining (level = 1):
     setting = loadSetting()
@@ -70,6 +87,8 @@ def sarsaTraining (level = 1):
             "died" : environment.playerDied
         })
 
+
+    saveQTable(agent, level, 2)
     return agent, trainingResults
 
 def evaluateSARSA (agent, level = 1):

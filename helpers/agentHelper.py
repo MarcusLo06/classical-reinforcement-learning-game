@@ -1,16 +1,20 @@
 import pickle, csv
 
-def saveQTable(agent, level: int):
-    with open(f"results/qTable_lvl{level}.pkl", "wb") as f:
+def saveQTable(agent, level: int, RLAlgor: int):
+    filePath = f"results/{"qlearning" if RLAlgor == 1 else "sarsa"}qTable_lvl{level}.pkl" 
+    
+    with open(filePath, "wb") as f:
         pickle.dump(agent.qTable, f)  # Assuming agent.qTable is your Q-value dict
 
-def loadQTable(agent, level: int):
-    with open(f"results/qTable_lvl{level}.pkl", "rb") as f:
+def loadQTable(agent, level: int, RLAlgor: int):
+    filePath = f"results/{"qlearning" if RLAlgor == 1 else "sarsa"}qTable_lvl{level}.pkl" 
+    
+    with open(filePath, "rb") as f:
         agent.qTable = pickle.load(f)
     return agent
 
-def loadTrainingResults(level: int = 0):
-    csvPath="results/qLearningLevel" + str(level) + "Training.csv"
+def loadTrainingResults(RLAlgor: int, level: int = 0):
+    csvPath=f"results/{"qlearning" if RLAlgor == 1 else "sarsa"}Level{str(level)}Training.csv"
     results = []
     with open(csvPath, "r", encoding="utf-8") as csvFile:
         reader = csv.DictReader(csvFile)
