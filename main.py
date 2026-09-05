@@ -55,7 +55,7 @@ async def onMove(
     # 2. Monster Move Checks & Execution
     monster_tasks = []
     for monster in monsters:
-        if random.random() <= 0.5:
+        if random.random() < 0.4 :
             # Pick only from valid directions around the monster
             valid_dirs = []
             for dir_name, (dx, dy, method_name) in DIRECTIONS.items():

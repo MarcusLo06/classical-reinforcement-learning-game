@@ -54,7 +54,8 @@ def qLearningTraining (level = 0):
             "steps" : step + 1,
             "totalReward" : totalReward,
             "epsilon" : epsilon,
-            "completed" : done and not environment.playerDied
+            "completed" : done and not environment.playerDied,
+            "died" : environment.playerDied
         })
     
     return agent, trainingResults

@@ -1,5 +1,6 @@
 # Movement choices available to the agent
 import importlib
+import random
 
 UP = 0
 RIGHT = 1
@@ -31,6 +32,11 @@ class WorldEnvironment:
             "HAZARD_POS",
             []
         )
+        self.monsterPositions = getattr(
+            self.levelData,
+            "MONSTER_POS",
+            []
+        )
         self.reset()
 
     # Restore level and return the initial state
@@ -39,6 +45,7 @@ class WorldEnvironment:
         self.remainingApples = set(self.applePositions)
         self.remainingKeys = set(self.keyPositions)
         self.unopenedChests = set(self.chestPositions)
+        self.currentMonsterPositions = list(self.monsterPositions)
         self.keyCount = 0
         self.done = False
         self.stepCount = 0
@@ -65,13 +72,20 @@ class WorldEnvironment:
             self.unopenedChests
         )
 
-        return (
+        state = (
             self.playerPosition,
             appleState,
             keyState,
             chestState,
             self.keyCount
         )
+
+        if self.level >= 4 :
+            return state + (
+                tuple(self.currentMonsterPositions),
+            )
+
+        return state
     
     def getItemState (self, itemPositions, remainingItems) :
         itemState = 0
@@ -92,6 +106,35 @@ class WorldEnvironment:
             return False
         
         return self.levelMap[x][y] == 0
+
+    def getMonsterMoveOptions (self, monsterPosition) :
+        moveOptions = []
+        x, y = monsterPosition
+
+        for moveX, moveY in MOVE_DIRECTIONS :
+            nextPosition = (x + moveX, y + moveY)
+
+            if (
+                self.canMoveTo(nextPosition)
+                and nextPosition not in self.currentMonsterPositions
+            ) :
+                moveOptions.append(nextPosition)
+
+        return moveOptions
+
+    def moveMonsters (self) :
+        for i, monsterPosition in enumerate(self.currentMonsterPositions) :
+            if random.random() < 0.4 :
+                moveOptions = self.getMonsterMoveOptions(monsterPosition)
+
+                if len(moveOptions) > 0 :
+                    self.currentMonsterPositions[i] = random.choice(moveOptions)
+
+    def playerIsDead (self) :
+        return (
+            self.playerPosition in self.hazardPositions
+            or self.playerPosition in self.currentMonsterPositions
+        )
     
     def step(self, action):
         moveX, moveY = MOVE_DIRECTIONS[action]
@@ -103,10 +146,18 @@ class WorldEnvironment:
 
         self.stepCount += 1
         
-        if self.playerPosition in self.hazardPositions :
+        if self.playerIsDead() :
             self.playerDied = True
             self.done = True
-            
+
+            return self.getState(), 0, self.done
+
+        self.moveMonsters()
+
+        if self.playerIsDead() :
+            self.playerDied = True
+            self.done = True
+
             return self.getState(), 0, self.done
 
         reward = self.collectItem()

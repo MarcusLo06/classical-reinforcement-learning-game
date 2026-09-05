@@ -22,7 +22,8 @@ def saveTrainingResults (trainingResults) :
         "steps",
         "totalReward",
         "epsilon",
-        "completed"
+        "completed",
+        "died"
     ]
 
     csvPath = "results/qLearningLevel0Training.csv"

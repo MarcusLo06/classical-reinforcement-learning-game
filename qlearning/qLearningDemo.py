@@ -98,7 +98,7 @@ async def qLearningDemo():
 
         screen.fill(BG)
 
-        player.update(dt)
+        await player.update(dt)
         tileMap.draw()
         player.draw()
 
