@@ -150,7 +150,7 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), 0, self.done
+            return self.getState(), 0, self.done, MOVE_DIRECTIONS[action]
 
         self.moveMonsters()
 
@@ -158,7 +158,7 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), 0, self.done
+            return self.getState(), 0, self.done, MOVE_DIRECTIONS[action]
 
         reward = self.collectItem()
 
@@ -167,7 +167,7 @@ class WorldEnvironment:
             and len(self.unopenedChests) == 0
         )
 
-        return self.getState(), reward, self.done
+        return self.getState(), reward, self.done, MOVE_DIRECTIONS[action]
     
     def collectItem(self): 
         reward = 0

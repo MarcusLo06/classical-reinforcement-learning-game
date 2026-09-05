@@ -1,7 +1,8 @@
 import csv
 import matplotlib.pyplot as plt
 
-from qlearning.qLearningTraining import qLearningTraining
+from helpers.agentHelper import saveTrainingResults
+from qlearning.qLearningAgent import qLearningTraining
 
 def movingAverage (values, window = 50) :
     averages = []
@@ -16,24 +17,6 @@ def movingAverage (values, window = 50) :
         
     return averages
 
-def saveTrainingResults (trainingResults) :
-    fieldNames = [
-        "episode",
-        "steps",
-        "totalReward",
-        "epsilon",
-        "completed",
-        "died"
-    ]
-
-    csvPath = "results/qLearningLevel0Training.csv"
-
-    with open(csvPath, "w", newline = "", encoding = "utf-8") as csvFile :
-        writer = csv.DictWriter(csvFile, fieldnames = fieldNames)
-        writer.writeheader()
-        writer.writerows(trainingResults)
-
-    return csvPath
 
 def createTrainingGraph (trainingResults) :
     episodes = []
@@ -80,7 +63,7 @@ def createTrainingGraph (trainingResults) :
 
 if __name__ == "__main__" :
     qLearningAgent, trainingResults = qLearningTraining(level = 0)
-    csvPath = saveTrainingResults(trainingResults)
+    csvPath = saveTrainingResults(trainingResults, 1, 1)
     graphPath = createTrainingGraph(trainingResults)
     
     print(f"Training result saved to: {csvPath}")

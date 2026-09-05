@@ -5,7 +5,7 @@ from pygame.math import Vector2
 
 from classes.levelManager import LevelManager
 from classes.worldEnvironment import WorldEnvironment
-from qlearning.qLearningTraining import qLearningTraining
+from qlearning.qLearningAgent import qLearningTraining, getQLearningAgent
 from helpers.assetsGetter import get_pixels_font
 from helpers.customTextRender import render_text_with_outline
 from settings import (
@@ -31,7 +31,7 @@ def drawText(screen, font, text, x, y):
 
 
 async def qLearningDemo():
-    agent, trainingResults = qLearningTraining()
+    agent, trainingResults = getQLearningAgent(level=0, train= True)
 
     environment = WorldEnvironment(0)
     state = environment.reset()
@@ -84,7 +84,7 @@ async def qLearningDemo():
                 epsilon=0.0
             )
 
-            state, reward, done = environment.step(action)
+            state, reward, done, move_direction = environment.step(action)
             totalReward += reward
 
             player.coordinate = Vector2(state)

@@ -1,11 +1,31 @@
-import random
+import random, pickle, csv
 from classes.worldEnvironment import WorldEnvironment
 from qlearning.qLearning import QLearning
 from helpers.learningPolicy import linearEpsilon
 from helpers.loadSetting import loadSetting
+from helpers.agentHelper import saveQTable, loadQTable, loadTrainingResults
 
 
-def qLearningTraining (level = 0):
+
+async def getQLearningAgent(level: int = 0, train: bool = False):
+    if train:
+        print("Training agent of level", level)
+        return qLearningTraining(level)
+    else:
+        print("Loading agent of level", level)
+        return qLearningLoad(level)
+        
+
+
+def qLearningLoad(level: int = 0):
+    setting = loadSetting()
+    agent = QLearning(setting["alpha"], setting["gamma"])
+    agent = loadQTable(agent, level)  # Load the trained Q-values!
+    trainingResults = loadTrainingResults(level)
+    return agent, trainingResults
+
+
+def qLearningTraining (level: int = 0):
     setting = loadSetting()
     random.seed(setting["seed"])
     
@@ -33,7 +53,7 @@ def qLearningTraining (level = 0):
         for step in range(setting["maxStepsPerEpisode"]):
             action = agent.selectAction(state, epsilon)
 
-            nextState, reward, done = environment.step(action)
+            nextState, reward, done, move_direction = environment.step(action)
 
             agent.update(
                 state,
@@ -57,7 +77,9 @@ def qLearningTraining (level = 0):
             "completed" : done and not environment.playerDied,
             "died" : environment.playerDied
         })
-    
+
+
+    saveQTable(agent, level)
     return agent, trainingResults
 
 def evaluateQLearning(agent, level = 0):
@@ -70,7 +92,7 @@ def evaluateQLearning(agent, level = 0):
     
     for step in range(setting["maxStepsPerEpisode"]):
         action = agent.selectAction(state, epsilon = 0.0)
-        state, reward, done = environment.step(action)
+        state, reward, done, move_direction = environment.step(action)
         
         route.append(state)
         totalReward += reward

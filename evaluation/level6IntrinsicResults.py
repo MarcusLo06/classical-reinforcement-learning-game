@@ -1,19 +1,10 @@
 import csv
 import matplotlib.pyplot as plt
 
+from helpers.agentHelper import saveTrainingResults
 from qlearning.qLearningLv6Training import qLearningLv6Training
 from qlearning.qLearningResults import movingAverage
 
-def saveTrainingResults (trainingResults, fileName) :
-    fieldNames = list(trainingResults[0].keys())
-    csvPath = f"results/{fileName}.csv"
-
-    with open(csvPath, "w", newline = "", encoding = "utf-8") as csvFile :
-        writer = csv.DictWriter(csvFile, fieldnames = fieldNames)
-        writer.writeheader()
-        writer.writerows(trainingResults)
-
-    return csvPath
 
 def getTrainingValues (trainingResults, valueName) :
     values = []
@@ -142,12 +133,16 @@ if __name__ == "__main__" :
 
     withoutIntrinsicCsvPath = saveTrainingResults(
         withoutIntrinsicResults,
-        "qLearningLevel6WithoutIntrinsic"
+        6,
+        1,
+        "WithoutIntrinsic"
     )
 
     withIntrinsicCsvPath = saveTrainingResults(
         withIntrinsicResults,
-        "qLearningLevel6WithIntrinsic"
+        6,
+        1,
+        "WithIntrinsic"
     )
 
     graphPath = createComparisonGraph(

@@ -5,7 +5,9 @@ from classes.character import Character
 from classes.tile import Tile
 from classes.tilemap import TileMap
 from classes.uiButton import UIButton
+from classes.worldEnvironment import WorldEnvironment
 from classes.levelManager import LevelManager
+from qlearning.qLearningAgent import getQLearningAgent
 from helpers.pixelTranslate import translatePixelToCoordinate
 from helpers.customTextRender import render_text_with_outline
 from helpers.assetsGetter import get_pixels_font
@@ -18,6 +20,13 @@ DIRECTIONS = {
     "right": (1, 0, "move_right"),
     "up": (0, -1, "move_up"),
     "down": (0, 1, "move_down"),
+}
+
+VECTORDIRECTION = {
+    (-1,0): "left",
+    (1,0): "right",
+    (0,-1): "up",
+    (0,1): "down"
 }
 
 KEY_MAP = {
@@ -95,16 +104,41 @@ def allRewardsCollected (tileMap) :
     return True
 
 
+async def onLevelLoad(level: int, screen: pygame.surface, tileSize: Vector2, topbarHeight: int):
+    tileMap, player, monsters = await LevelManager().loadLevel(
+        level,
+        screen,
+        tileSize,
+        TOPBARHEIGHT
+    )
+    agent, results = await getQLearningAgent(level, True)
+
+    return tileMap, player, monsters, agent
+
+
+
+
 async def game_scene(screen, clock, level: int = 1):
     tileSize = Vector2(WIDTH // COLUMNS, HEIGHT // ROWS)
     infoFont = pygame.font.Font(get_pixels_font() , 20)
 
-    tileMap, player, monsters = await LevelManager().loadLevel(level, screen, tileSize, TOPBARHEIGHT)
+    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT)
 
 
     running = True
     debug = False
     levelComplete = False
+    RLAlgor = 0
+
+
+    environment = WorldEnvironment(level)
+    state = environment.reset()
+
+
+
+
+    moveDelay = 10
+    lastMoveTime = pygame.time.get_ticks()
 
 
     while running:
@@ -113,6 +147,7 @@ async def game_scene(screen, clock, level: int = 1):
 
         target = pygame.mouse.get_pos()
         mouse_buttons = pygame.mouse.get_pressed()
+        currentTime = pygame.time.get_ticks()
     
         # INPUT GETTING
         for e in pygame.event.get():
@@ -122,23 +157,21 @@ async def game_scene(screen, clock, level: int = 1):
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_r:
                     debug = not debug
+                if e.key == pygame.K_t:
+                    RLAlgor = (RLAlgor + 1) % 3
                 if level > 1 and e.key == pygame.K_q:
                     level -= 1
-                    tileMap, player, monsters = await LevelManager().loadLevel(
-                        level,
-                        screen,
-                        tileSize,
-                        TOPBARHEIGHT
-                    )
+
+                    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT)
+
+                    
                     levelComplete = False
                 if level < 6 and e.key == pygame.K_e:
                     level += 1
-                    tileMap, player, monsters = await LevelManager().loadLevel(
-                        level,
-                        screen,
-                        tileSize,
-                        TOPBARHEIGHT
-                    )
+
+                    tileMap, player, monsters, agent = await onLevelLoad(level, screen, tileSize, TOPBARHEIGHT)
+
+                    
                     levelComplete = False
 
                 if not levelComplete and e.key in KEY_MAP:
@@ -150,6 +183,38 @@ async def game_scene(screen, clock, level: int = 1):
                         COLUMNS,
                         ROWS,
                     )
+
+
+
+        if (
+            RLAlgor == 1
+            and not levelComplete
+            and currentTime - lastMoveTime >= moveDelay
+        ):
+            action = agent.selectAction(
+                state,
+                epsilon=0.0
+            )
+
+            state, reward, done, move_direction = environment.step(action)
+
+            # player.coordinate = Vector2(state)
+            # await player.on_move()
+            await onMove(
+                player,
+                monsters,
+                VECTORDIRECTION[move_direction],
+                tileMap,
+                COLUMNS,
+                ROWS,
+            )
+
+
+            # if reward > 0:
+            #     tileMap.tilesDictionary[state].hasApple = False
+            #     player.appleCount += 1
+
+            lastMoveTime = currentTime
                 
 
 
@@ -189,33 +254,25 @@ async def game_scene(screen, clock, level: int = 1):
 
         # Total Score
         player_score = player.appleCount + player.chestCount * 2
+
+        bottom_text = "(T) Reinforcement Learning Algorithm: " + ("None" if RLAlgor == 0 else "Q-Learning" if RLAlgor == 1 else "SARSA")
         await draw_text(
             screen, infoFont,
-            "Score: " + str(player_score),
-            WIDTH * 1 / 5,  
-            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
+            bottom_text,
+            WIDTH // 2,  
+            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT * 1/3,
         )
 
+        
+        bottom_text = f"Score: {str(player_score)} - Apple: {str(player.appleCount)} - Key: {str(player.keyCount)} - Chest: {str(player.chestCount)} - Steps: {environment.stepCount}"
         await draw_text(
             screen, infoFont,
-            "Apple: " + str(player.appleCount),
-            WIDTH * 2 / 5,  
-            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
+            bottom_text,
+            WIDTH // 2,  
+            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT * 2/3,
         )
 
-        await draw_text(
-            screen, infoFont,
-            "Key: " + str(player.keyCount),
-            WIDTH * 3 / 5,  
-            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
-        )
 
-        await draw_text(
-            screen, infoFont,
-            "Chest: " + str(player.chestCount),
-            WIDTH * 4 / 5,  
-            TOPBARHEIGHT + HEIGHT + FOOTERHEIGHT // 2,
-        )
 
 
         # Check if player collected anything.

@@ -1,20 +1,11 @@
 import csv
 import matplotlib.pyplot as plt
 
-from qlearning.qLearningTraining import qLearningTraining, evaluateQLearning
+from helpers.agentHelper import saveTrainingResults
+from qlearning.qLearningAgent import qLearningTraining, evaluateQLearning
 from qlearning.qLearningResults import movingAverage
 from sarsa.sarsaTraining import sarsaTraining, evaluateSARSA
 
-def saveTrainingResults (trainingResults, fileName) :
-    fieldNames = list(trainingResults[0].keys())
-    csvPath = f"results/{fileName}.csv"
-
-    with open(csvPath, "w", newline = "", encoding = "utf-8") as csvFile :
-        writer = csv.DictWriter(csvFile, fieldnames = fieldNames)
-        writer.writeheader()
-        writer.writerows(trainingResults)
-
-    return csvPath
 
 def createTrainingGraph (trainingResults, graphTitle, fileName) :
     episodes = []
@@ -88,7 +79,8 @@ if __name__ == "__main__" :
 
         qLearningCsvPath = saveTrainingResults(
             qLearningResults,
-            qLearningFileName
+            level,
+            1
         )
 
         qLearningGraphPath = createTrainingGraph(
@@ -99,7 +91,8 @@ if __name__ == "__main__" :
 
         sarsaCsvPath = saveTrainingResults(
             sarsaResults,
-            sarsaFileName
+            level,
+            2
         )
 
         sarsaGraphPath = createTrainingGraph(

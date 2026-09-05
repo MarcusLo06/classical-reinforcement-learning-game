@@ -58,7 +58,7 @@ def qLearningLv6Training (useIntrinsicReward = True) :
         for step in range(setting["maxStepsPerEpisode"]) :
             action = agent.selectAction(state, epsilon)
 
-            nextState, environmentReward, done = environment.step(action)
+            nextState, environmentReward, done, move_direction = environment.step(action)
 
             intrinsicReward = 0
 

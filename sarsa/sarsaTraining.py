@@ -33,7 +33,7 @@ def sarsaTraining (level = 1):
         done = False
 
         for step in range(setting["maxStepsPerEpisode"]):
-            nextState, reward, done = environment.step(action)
+            nextState, reward, done, move_direction = environment.step(action)
 
             if done :
                 nextAction = None
@@ -82,7 +82,7 @@ def evaluateSARSA (agent, level = 1):
 
     for step in range(setting["maxStepsPerEpisode"]) :
         action = agent.selectAction(state, epsilon = 0.0)
-        state, reward, done = environment.step(action)
+        state, reward, done, move_direction = environment.step(action)
 
         route.append(state)
         totalReward += reward

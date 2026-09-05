@@ -1,4 +1,4 @@
-from qlearning.qLearningTraining import qLearningTraining, evaluateQLearning
+from qlearning.qLearningAgent import qLearningTraining, evaluateQLearning
 from sarsa.sarsaTraining import sarsaTraining, evaluateSARSA
 
 if __name__ == "__main__" :

@@ -1,6 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
+from helpers.agentHelper import saveTrainingResults
 from sarsa.sarsaTraining import sarsaTraining, evaluateSARSA
 
 def movingAverage (values, window = 50) :
@@ -16,24 +17,6 @@ def movingAverage (values, window = 50) :
         
     return averages
 
-def saveTrainingResults (trainingResults) :
-    fieldNames = [
-        "episode",
-        "steps",
-        "totalReward",
-        "epsilon",
-        "completed",
-        "died"
-    ]
-
-    csvPath = "results/sarsaLevel1Training.csv"
-
-    with open(csvPath, "w", newline = "", encoding = "utf-8") as csvFile :
-        writer = csv.DictWriter(csvFile, fieldnames = fieldNames)
-        writer.writeheader()
-        writer.writerows(trainingResults)
-
-    return csvPath
 
 def createTrainingGraph (trainingResults) :
     episodes = []
@@ -86,7 +69,7 @@ def createTrainingGraph (trainingResults) :
 
 if __name__ == "__main__" :
     sarsaAgent, trainingResults = sarsaTraining(level = 1)
-    csvPath = saveTrainingResults(trainingResults)
+    csvPath = saveTrainingResults(trainingResults, 1, 2)
     graphPath = createTrainingGraph(trainingResults)
     evaluationResult = evaluateSARSA(sarsaAgent, level = 1)
 
