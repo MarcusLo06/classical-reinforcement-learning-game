@@ -1,9 +1,21 @@
 import csv
 import matplotlib.pyplot as plt
 
-from helpers.agentHelper import saveTrainingResults
+from helpers.agentHelper import saveQTable
 from qlearning.qLearningLv6Training import qLearningLv6Training
 from qlearning.qLearningResults import movingAverage
+
+
+def saveTrainingResults (trainingResults, fileName) :
+    fieldNames = list(trainingResults[0].keys())
+    csvPath = f"results/{fileName}.csv"
+
+    with open(csvPath, "w", newline = "", encoding = "utf-8") as csvFile :
+        writer = csv.DictWriter(csvFile, fieldnames = fieldNames)
+        writer.writeheader()
+        writer.writerows(trainingResults)
+
+    return csvPath
 
 
 def getTrainingValues (trainingResults, valueName) :
@@ -133,17 +145,15 @@ if __name__ == "__main__" :
 
     withoutIntrinsicCsvPath = saveTrainingResults(
         withoutIntrinsicResults,
-        6,
-        1,
-        "WithoutIntrinsic"
+        "qLearningLevel6WithoutIntrinsic"
     )
 
     withIntrinsicCsvPath = saveTrainingResults(
         withIntrinsicResults,
-        6,
-        1,
-        "WithIntrinsic"
+        "qLearningLevel6WithIntrinsic"
     )
+
+    saveQTable(withIntrinsicAgent, 6, 1)
 
     graphPath = createComparisonGraph(
         withoutIntrinsicResults,
@@ -152,4 +162,5 @@ if __name__ == "__main__" :
 
     print(f"Without intrinsic reward CSV: {withoutIntrinsicCsvPath}")
     print(f"With intrinsic reward CSV: {withIntrinsicCsvPath}")
+    print("With intrinsic reward Q-table: results/qlearningqTable_lvl6.pkl")
     print(f"Comparison graph: {graphPath}")

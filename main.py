@@ -83,6 +83,39 @@ async def onMove(
         await asyncio.gather(*monster_tasks)
 
 
+# Copy the RL environment positions to the game screen
+async def syncAgentPositions (
+    player: Character,
+    monsters: list[Character],
+    environment: WorldEnvironment
+) :
+    previousPlayerPosition = tuple(player.coordinate)
+    player.coordinate = Vector2(environment.playerPosition)
+
+    if tuple(player.coordinate) != previousPlayerPosition :
+        if player.coordinate.x < previousPlayerPosition[0] :
+            player.facingRight = False
+        elif player.coordinate.x > previousPlayerPosition[0] :
+            player.facingRight = True
+
+        await player.on_move()
+
+    for monster, monsterPosition in zip(
+        monsters,
+        environment.currentMonsterPositions
+    ) :
+        previousMonsterPosition = tuple(monster.coordinate)
+        monster.coordinate = Vector2(monsterPosition)
+
+        if tuple(monster.coordinate) != previousMonsterPosition :
+            if monster.coordinate.x < previousMonsterPosition[0] :
+                monster.facingRight = False
+            elif monster.coordinate.x > previousMonsterPosition[0] :
+                monster.facingRight = True
+
+            await monster.on_move()
+
+
 
 async def draw_text(screen: pygame.surface, font: pygame.font, inp_text: str, x: int, y: int, inp_color: pygame.color = (255,255,255)):
     textLabel = render_text_with_outline(
@@ -114,9 +147,9 @@ async def onLevelLoad(level: int, screen: pygame.surface, tileSize: Vector2, top
     )
 
     if RLAlgor == 1:
-        agent, results = await getQLearningAgent(level, True)
-    elif RLAlgor == 2:
-        agent, results = await getSARSAAgent(level, True)
+        agent, results = await getQLearningAgent(level, False)
+    elif RLAlgor == 2 and 0 < level < 6:
+        agent, results = await getSARSAAgent(level, False)
     else:
         agent = None
 
@@ -125,7 +158,7 @@ async def onLevelLoad(level: int, screen: pygame.surface, tileSize: Vector2, top
 
 
 
-async def game_scene(screen, clock, level: int = 1):
+async def game_scene(screen, clock, level: int = 0):
     tileSize = Vector2(WIDTH // COLUMNS, HEIGHT // ROWS)
     infoFont = pygame.font.Font(get_pixels_font() , 20)
 
@@ -144,7 +177,7 @@ async def game_scene(screen, clock, level: int = 1):
 
 
 
-    moveDelay = 10
+    moveDelay = 300
     lastMoveTime = pygame.time.get_ticks()
 
 
@@ -165,18 +198,24 @@ async def game_scene(screen, clock, level: int = 1):
                 if e.key == pygame.K_r:
                     debug = not debug
                 if e.key == pygame.K_t:
-                    RLAlgor = (RLAlgor + 1) % 3
+                    if level in [0, 6] :
+                        RLAlgor = (RLAlgor + 1) % 2
+                    else :
+                        RLAlgor = (RLAlgor + 1) % 3
 
 
                     if RLAlgor == 1:
-                        agent, results = await getQLearningAgent(level, True)
+                        agent, results = await getQLearningAgent(level, False)
                     elif RLAlgor == 2:
-                        agent, results = await getSARSAAgent(level, True)
+                        agent, results = await getSARSAAgent(level, False)
                 if e.key == pygame.K_SPACE:
                     runAgent = not runAgent
 
-                if level > 1 and e.key == pygame.K_q:
+                if level > 0 and e.key == pygame.K_q:
                     level -= 1
+
+                    if level == 0 and RLAlgor == 2 :
+                        RLAlgor = 0
 
                     environment = WorldEnvironment(level)
                     state = environment.reset()
@@ -186,6 +225,9 @@ async def game_scene(screen, clock, level: int = 1):
                     levelComplete = False
                 if level < 6 and e.key == pygame.K_e:
                     level += 1
+
+                    if level == 6 and RLAlgor == 2 :
+                        RLAlgor = 0
 
                     environment = WorldEnvironment(level)
                     state = environment.reset()
@@ -219,15 +261,10 @@ async def game_scene(screen, clock, level: int = 1):
 
             state, reward, done, move_direction = environment.step(action)
 
-            # player.coordinate = Vector2(state)
-            # await player.on_move()
-            await onMove(
+            await syncAgentPositions(
                 player,
                 monsters,
-                VECTORDIRECTION[move_direction],
-                tileMap,
-                COLUMNS,
-                ROWS,
+                environment
             )
 
 
@@ -276,7 +313,16 @@ async def game_scene(screen, clock, level: int = 1):
         # Total Score
         player_score = player.appleCount + player.chestCount * 2
 
-        bottom_text = "(T) Reinforcement Learning Algorithm: " + ("None" if RLAlgor == 0 else "Q-Learning" if RLAlgor == 1 else "SARSA") + " - (SPACE) Running: " + str(runAgent)
+        if RLAlgor == 0 :
+            algorithmName = "None"
+        elif level == 6 :
+            algorithmName = "Q-Learning + Intrinsic Reward"
+        elif RLAlgor == 1 :
+            algorithmName = "Q-Learning"
+        else :
+            algorithmName = "SARSA"
+
+        bottom_text = algorithmName + " | Running: " + str(runAgent)
         await draw_text(
             screen, infoFont,
             bottom_text,
@@ -300,6 +346,7 @@ async def game_scene(screen, clock, level: int = 1):
         tilePlayerOn = tileMap.tilesDictionary[tuple(player.coordinate)]
         # Reset level when the player enters a hazard tile
         if tilePlayerOn.hasHazard or any(m.coordinate == player.coordinate for m in monsters):
+            state = environment.reset()
             tileMap, player, monsters = await LevelManager().loadLevel(
                 level,
                 screen,

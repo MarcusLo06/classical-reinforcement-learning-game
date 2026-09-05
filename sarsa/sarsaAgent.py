@@ -26,6 +26,13 @@ def sarsaTraining (level = 1):
     setting = loadSetting()
     random.seed(setting["seed"])
 
+    episodes = setting["episodes"]
+    epsilonDecayEpisodes = setting["epsilonDecayEpisodes"]
+
+    if level in [4, 5] :
+        episodes = setting["monsterEpisodes"]
+        epsilonDecayEpisodes = setting["monsterEpsilonDecayEpisodes"]
+
     environment = WorldEnvironment(level)
 
     agent = SARSA(
@@ -35,14 +42,14 @@ def sarsaTraining (level = 1):
 
     trainingResults = []
 
-    for episode in range(setting["episodes"]) :
+    for episode in range(episodes) :
         state = environment.reset()
 
         epsilon = linearEpsilon (
             episode,
             setting["epsilonStart"],
             setting["epsilonEnd"],
-            setting["epsilonDecayEpisodes"]
+            epsilonDecayEpisodes
         )
 
         action = agent.selectAction(state, epsilon)
