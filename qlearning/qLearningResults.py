@@ -63,7 +63,7 @@ def createTrainingGraph (trainingResults) :
 
 if __name__ == "__main__" :
     qLearningAgent, trainingResults = qLearningTraining(level = 0)
-    csvPath = saveTrainingResults(trainingResults, 1, 1)
+    csvPath = saveTrainingResults(trainingResults, 0, 1)
     graphPath = createTrainingGraph(trainingResults)
     
     print(f"Training result saved to: {csvPath}")

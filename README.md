@@ -16,6 +16,8 @@ py -3.13 -B main.py
 - `W`, `A`, `S`, `D`: Move the player
 - `E`: Go to the next level
 - `Q`: Go to the previous level
+- `T`: Change the RL algorithm. Levels 0 and 6 use Q-Learning only
+- `Space`: Start or stop the selected agent
 
 ## Training and Evaluation
 
@@ -45,19 +47,21 @@ Training CSV files and graphs are saved in the `results` folder.
 
 The learning parameters are stored in `classicalRLSettings.json`.
 
-| Setting                   | Value |
-| ------------------------- | ----: |
-| Episodes                  |  3000 |
-| Alpha                     |   0.2 |
-| Gamma                     |  0.95 |
-| Epsilon Start             |   1.0 |
-| Epsilon End               |  0.05 |
-| Epsilon Decay Episodes    |  2700 |
-| Maximum Steps per Episode |   400 |
-| Random Seed               |    42 |
-| Intrinsic Reward Strength | 0.001 |
+| Setting                       | Value | Levels  |
+| ----------------------------- | ----: | ------- |
+| Base Episodes                 |  3000 | 0-3, 6  |
+| Monster Episodes              | 20000 | 4-5     |
+| Alpha                         |   0.2 | All     |
+| Gamma                         |  0.95 | All     |
+| Epsilon Start                 |   1.0 | All     |
+| Epsilon End                   |  0.05 | All     |
+| Base Epsilon Decay Episodes   |  2700 | 0-3, 6  |
+| Monster Epsilon Decay Episodes | 18000 | 4-5     |
+| Maximum Steps per Episode     |   400 | All     |
+| Random Seed                   |    42 | All     |
+| Intrinsic Reward Strength     | 0.001 | 6       |
 
-The same learning settings are used when comparing the agents.
+Q-Learning and SARSA use the same settings when they are compared on the same level. Levels 4 and 5 use more episodes because monster positions increase the state space.
 
 ## Level 6 Intrinsic Reward
 

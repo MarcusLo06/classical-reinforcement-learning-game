@@ -14,7 +14,13 @@ def loadQTable(agent, level: int, RLAlgor: int):
     return agent
 
 def loadTrainingResults(RLAlgor: int, level: int = 0):
-    csvPath=f"results/{"qlearning" if RLAlgor == 1 else "sarsa"}Level{str(level)}Training.csv"
+    if RLAlgor == 1 and level == 6 :
+        csvPath = "results/qLearningLevel6WithIntrinsic.csv"
+        totalRewardName = "totalLearningReward"
+    else :
+        csvPath=f"results/{"qlearning" if RLAlgor == 1 else "sarsa"}Level{str(level)}Training.csv"
+        totalRewardName = "totalReward"
+
     results = []
     with open(csvPath, "r", encoding="utf-8") as csvFile:
         reader = csv.DictReader(csvFile)
@@ -22,7 +28,7 @@ def loadTrainingResults(RLAlgor: int, level: int = 0):
             results.append({
                 "episode": int(row["episode"]),
                 "steps": int(row["steps"]),
-                "totalReward": float(row["totalReward"]),
+                "totalReward": float(row[totalRewardName]),
                 "epsilon": float(row["epsilon"]),
                 "completed": row["completed"].lower() in ("true", "1"),
                 "died": row["died"].lower() in ("true", "1")

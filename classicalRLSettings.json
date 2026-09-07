@@ -5,6 +5,8 @@
   "epsilonStart": 1.0,
   "epsilonEnd": 0.05,
   "epsilonDecayEpisodes": 2700,
+  "monsterEpisodes": 20000,
+  "monsterEpsilonDecayEpisodes": 18000,
   "maxStepsPerEpisode": 400,
   "seed": 42,
   "intrinsicRewardStrength": 0.001

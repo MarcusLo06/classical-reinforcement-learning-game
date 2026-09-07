@@ -28,6 +28,13 @@ def qLearningLoad(level: int = 0):
 def qLearningTraining (level: int = 0):
     setting = loadSetting()
     random.seed(setting["seed"])
+
+    episodes = setting["episodes"]
+    epsilonDecayEpisodes = setting["epsilonDecayEpisodes"]
+
+    if level in [4, 5] :
+        episodes = setting["monsterEpisodes"]
+        epsilonDecayEpisodes = setting["monsterEpsilonDecayEpisodes"]
     
     environment = WorldEnvironment(level)
     
@@ -38,14 +45,14 @@ def qLearningTraining (level: int = 0):
     
     trainingResults = []
 
-    for episode in range(setting["episodes"]) :
+    for episode in range(episodes) :
         state = environment.reset()
         
         epsilon = linearEpsilon (
             episode,
             setting["epsilonStart"],
             setting["epsilonEnd"],
-            setting["epsilonDecayEpisodes"]
+            epsilonDecayEpisodes
         )
         
         totalReward = 0

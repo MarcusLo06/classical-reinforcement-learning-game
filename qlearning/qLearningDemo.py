@@ -31,7 +31,10 @@ def drawText(screen, font, text, x, y):
 
 
 async def qLearningDemo():
-    agent, trainingResults = getQLearningAgent(level=0, train= True)
+    agent, trainingResults = await getQLearningAgent(
+        level = 0,
+        train = False
+    )
 
     environment = WorldEnvironment(0)
     state = environment.reset()
