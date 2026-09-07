@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from helpers.agentHelper import saveTrainingResults
 from qlearning.qLearningAgent import qLearningTraining, evaluateQLearning
 from qlearning.qLearningResults import movingAverage
-from sarsa.sarsaTraining import sarsaTraining, evaluateSARSA
+from sarsa.sarsaAgent import sarsaTraining, evaluateSARSA
 
 
 def createTrainingGraph (trainingResults, graphTitle, fileName) :
