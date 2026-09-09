@@ -150,7 +150,7 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), -10, self.done, MOVE_DIRECTIONS[action]
+            return self.getState(), -1, self.done, MOVE_DIRECTIONS[action]
 
         self.moveMonsters()
 
@@ -158,7 +158,7 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), -10, self.done, MOVE_DIRECTIONS[action]
+            return self.getState(), -1, self.done, MOVE_DIRECTIONS[action]
 
         reward = self.collectItem() - 0.01
 
@@ -166,6 +166,9 @@ class WorldEnvironment:
             len(self.remainingApples) == 0
             and len(self.unopenedChests) == 0
         )
+
+        if self.done:
+            reward += 20.0
 
         return self.getState(), reward, self.done, MOVE_DIRECTIONS[action]
     
