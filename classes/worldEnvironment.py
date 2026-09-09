@@ -150,7 +150,8 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), -1, self.done, MOVE_DIRECTIONS[action]
+            deathReward = 0 if self.level in [4, 5, 6] else -1
+            return self.getState(), deathReward, self.done, MOVE_DIRECTIONS[action]
 
         self.moveMonsters()
 
@@ -158,16 +159,21 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), -1, self.done, MOVE_DIRECTIONS[action]
+            deathReward = 0 if self.level in [4, 5, 6] else -1
+            return self.getState(), deathReward, self.done, MOVE_DIRECTIONS[action]
 
-        reward = self.collectItem() - 0.01
+        reward = self.collectItem()
+
+        # Keep the recorded environment rewards for Levels 4 to 6.
+        if self.level not in [4, 5, 6] :
+            reward -= 0.01
 
         self.done = (
             len(self.remainingApples) == 0
             and len(self.unopenedChests) == 0
         )
 
-        if self.done:
+        if self.done and self.level not in [4, 5, 6] :
             reward += 20.0
 
         return self.getState(), reward, self.done, MOVE_DIRECTIONS[action]

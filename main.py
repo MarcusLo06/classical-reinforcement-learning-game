@@ -151,7 +151,7 @@ async def onLevelLoad(level: int, screen: pygame.surface, tileSize: Vector2, top
     if RLAlgor == 1:
         agent, results = await getQLearningAgent(level, False)
     elif RLAlgor == 2 and 0 < level < 6:
-        agent, results = await getSARSAAgent(level, True)
+        agent, results = await getSARSAAgent(level, level < 4)
     else:
         agent = None
 
