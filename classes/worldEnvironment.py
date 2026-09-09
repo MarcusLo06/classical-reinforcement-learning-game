@@ -54,7 +54,7 @@ class WorldEnvironment:
 
     # Lv 0 & 1 use position, while later Lvs also use item states
     def getState (self) :
-        if self.level <= 1 :
+        if self.level < 1 :
             return self.playerPosition
 
         appleState = self.getItemState(
@@ -104,7 +104,7 @@ class WorldEnvironment:
         
         if y < 0 or y >= self.rows : 
             return False
-        
+
         return self.levelMap[x][y] == 0
 
     def getMonsterMoveOptions (self, monsterPosition) :
@@ -150,7 +150,7 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), 0, self.done, MOVE_DIRECTIONS[action]
+            return self.getState(), -10, self.done, MOVE_DIRECTIONS[action]
 
         self.moveMonsters()
 
@@ -158,9 +158,9 @@ class WorldEnvironment:
             self.playerDied = True
             self.done = True
 
-            return self.getState(), 0, self.done, MOVE_DIRECTIONS[action]
+            return self.getState(), -10, self.done, MOVE_DIRECTIONS[action]
 
-        reward = self.collectItem()
+        reward = self.collectItem() - 0.01
 
         self.done = (
             len(self.remainingApples) == 0
