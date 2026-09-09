@@ -77,7 +77,11 @@ def createComparisonGraph (
         )
     )
 
-    maximumReward = [1] * len(episodes)
+    curvesOverlap = all(
+        withoutResult[field] == withResult[field]
+        for withoutResult, withResult in zip(withoutIntrinsicResults, withIntrinsicResults)
+        for field in ["steps", "completed", "totalEnvironmentReward"]
+    )
 
     plt.figure(figsize = (10, 10))
 
@@ -85,15 +89,20 @@ def createComparisonGraph (
     plt.plot(
         episodes,
         averageRewardsWithoutIntrinsic,
+        color = "#2878B5",
+        linewidth = 2.5,
         label = "Without Intrinsic Reward"
     )
     plt.plot(
         episodes,
         averageRewardsWithIntrinsic,
+        color = "#D88028",
+        linestyle = "--",
         label = "With Intrinsic Reward"
     )
-    plt.plot(episodes, maximumReward, label = "Maximum Reward")
-    plt.title("Q-Learning Level 6 Intrinsic Reward Comparison")
+    plt.title("Q-Learning Level 6 Intrinsic Reward Comparison\nSeed 42 | 50-episode averages | Step -0.01 | Death -1 | Completion +20", fontsize = 11)
+    if curvesOverlap :
+        plt.gcf().text(0.5, 0.01, "Both curves overlap: identical environment metrics in this seeded run.", ha = "center")
     plt.ylabel("Environment Reward")
     plt.legend()
     plt.grid(True)
@@ -102,11 +111,15 @@ def createComparisonGraph (
     plt.plot(
         episodes,
         averageSuccessWithoutIntrinsic,
+        color = "#2878B5",
+        linewidth = 2.5,
         label = "Without Intrinsic Reward"
     )
     plt.plot(
         episodes,
         averageSuccessWithIntrinsic,
+        color = "#D88028",
+        linestyle = "--",
         label = "With Intrinsic Reward"
     )
     plt.ylabel("Success Rate")
@@ -117,11 +130,15 @@ def createComparisonGraph (
     plt.plot(
         episodes,
         averageStepsWithoutIntrinsic,
+        color = "#2878B5",
+        linewidth = 2.5,
         label = "Without Intrinsic Reward"
     )
     plt.plot(
         episodes,
         averageStepsWithIntrinsic,
+        color = "#D88028",
+        linestyle = "--",
         label = "With Intrinsic Reward"
     )
     plt.xlabel("Episode")
@@ -130,7 +147,9 @@ def createComparisonGraph (
     plt.grid(True)
 
     graphPath = "results/qLearningLevel6IntrinsicComparison.png"
+    plt.tight_layout(rect = (0, 0.03, 1, 1))
     plt.savefig(graphPath)
+    plt.close()
 
     return graphPath
 
