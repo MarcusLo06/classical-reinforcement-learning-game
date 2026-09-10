@@ -31,6 +31,36 @@ py -3.13 -B main.py
 
 Training CSV files and graphs are saved in the `results` folder.
 
+To regenerate all Part I results with the current configuration:
+
+`py -3.13 -B -m evaluation.refreshPart1Results`
+
+Use `--output-dir PATH` to generate a separate candidate set before replacing results.
+This command trains each run once and records source hashes, artifact hashes, and
+saved-model evaluations in `results/trainingManifest.json`.
+SARSA Level 0 is included only to refresh the existing legacy model. It is not a GUI mode.
+
+### Current evaluation results
+
+These results use the teammate's maps and reward rules from `4cc71a8`.
+Training uses the configuration below. Evaluation uses epsilon 0 and seed 42.
+No settings were tuned to obtain these results.
+
+| Level | Q-Learning | SARSA |
+| --- | --- | --- |
+| 0 | Completed in 18 steps | Not offered in the GUI |
+| 1 | Completed in 23 steps | Did not complete within 400 steps |
+| 2 | Completed in 49 steps | Completed in 49 steps |
+| 3 | Completed in 43 steps | Completed in 43 steps |
+| 4 | Completed in 18 steps | Completed in 18 steps |
+| 5 | Completed in 21 steps | Completed in 17 steps |
+| 6 | Completed in 46 steps with or without intrinsic reward | Not offered in the GUI |
+
+The Level 1 SARSA run is an unresolved failure, not a successful conservative policy.
+It completed none of the 100 saved-model evaluations with seeds 0 to 99.
+Level 5 contains two apples in this version. Its results must not be mixed with
+the earlier one-apple map or its recordings.
+
 ## Level Summary
 
 | Level   | Description                                                               |
@@ -80,13 +110,16 @@ The intrinsic reward is calculated as:
 
 | Metric                             | Without Intrinsic Reward | With Intrinsic Reward |
 | ---------------------------------- | -----------------------: | --------------------: |
-| Total Successful Episodes          |                      399 |                  2461 |
-| Episode Reaching 80% Success Rate  |                     2668 |                   584 |
-| Episode Reaching 100% Success Rate |                     2686 |                   599 |
+| Total Successful Episodes          |                     2702 |                  2702 |
+| Episode Reaching 80% Success Rate  |                      408 |                   408 |
+| Episode Reaching 100% Success Rate |                      508 |                   508 |
 | Last 300 Episode Success Rate      |                     100% |                  100% |
-| Last 300 Average Steps             |                    48.52 |                 48.34 |
+| Last 300 Average Steps             |                    48.35 |                 48.35 |
 
-The agent using intrinsic reward reached a high success rate much earlier. The intrinsic reward encouraged the agent to explore new states before finding the distant environment reward.
+The success thresholds use 50-episode moving averages. Both runs used seed 42.
+Their environment rewards, completion flags, and step counts were identical.
+The run with intrinsic reward had additional learning reward, but this did not
+produce a measured improvement in learning speed under the current settings.
 
 ## AI Acknowledgement
 

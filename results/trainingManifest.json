@@ -1,0 +1,3838 @@
+{
+  "sourceCommit": "92cf0ef2a7ea442aeccea1a61f029cfc20124f83",
+  "sourceHashes": {
+    "classes\\character.py": "a4e6d6ee782482a5aa32c12c9923f807eb2ba31cfa91e76314967b3d9fe7a1ce",
+    "classes\\levelManager.py": "b598fefabd9622234f9da5dc7528915ff0887201b82ac38013401e47d9505391",
+    "classes\\qTable.py": "f66ea5a407821d46aa203a68793afb5dac7c4995428d683f8351dd63815f6bd0",
+    "classes\\tile.py": "c64ff85b5ecb67ef2ae388a85a45683bf1f842a467e502c9d88e1c1463064665",
+    "classes\\tilemap.py": "b3016b794fd00cb2b4492513f43e9864363f2dad04b429331ad1691a1f402188",
+    "classes\\uiButton.py": "70601f3c28aa1e284fb0d69dc1a1f9e9ca11a31b816cfceae867a783b00489fa",
+    "classes\\worldEnvironment.py": "833ddad06a62b906aa56698fec542c41727401edef93e05f1feb0920b33c1b8c",
+    "classicalRLSettings.json": "5bc44ec573d4de2fa89815ab4e5787f5d416ddd75830c80fb3b1557d7b5e3818",
+    "evaluation\\compareLv1Policy.py": "34d4147ece3465038ddf13c03f052545b7d0695dbccec6c823ff9470f6036d41",
+    "evaluation\\level2And3Results.py": "530075f9139f2befeb5191811fc7b58b0a563857a32756a88e8faf705bd10f27",
+    "evaluation\\level4And5Results.py": "93634c6af620d9786e9c7a8ebb333c01d5cf6089d6ea87d707516f472abbd7e0",
+    "evaluation\\level6IntrinsicResults.py": "15890e7fbcdc5694951ea779f8786c78a7baa4b54d59353b3e9007e907b79d65",
+    "evaluation\\refreshPart1Results.py": "90d1bf7576ae6519842a4a7617865eb66c14b2ee2cd276b7167e7f830dea4205",
+    "helpers\\agentHelper.py": "f8e30b1eae68f98ed64491a6e1dfcf3d57097b8d97bc0ca54c65e4491dade9a9",
+    "helpers\\assetsGetter.py": "bb30bad09fd2fd7a1df36758ea8d04d7fc9824b9bef79f6f4165b707cffdaeb3",
+    "helpers\\customTextRender.py": "5d8064b0bd7b8382d9195a94e3b44101cc43d1250980ecddf6bd14fe4a3bafa2",
+    "helpers\\learningPolicy.py": "9e339325b9b74239375d7efb7e8558e0a94137466ace096219d8799725921d83",
+    "helpers\\loadSetting.py": "5117581eb4756e4f7c54d7c480faf35ff0fd4cc46e47893b45c10c8317a93d68",
+    "helpers\\pixelTranslate.py": "f73517b046da0a34be882557f564c6cb3c1193ec30d61cd8cc342f1487e41c80",
+    "main.py": "d03884908e64d5835ee5cf567b9e32e43e9b1e40da2d9d6b4a369a7cbc0b7f61",
+    "qlearning\\qLearning.py": "cc868b2f84c700a82bcb9bd7aec0333b2f20c1620d9cfe0e119b6152de92bef8",
+    "qlearning\\qLearningAgent.py": "b5197cd3377f6b3e23ca0a6ee9975717388b48e70eb32302c41942db93ac295b",
+    "qlearning\\qLearningDemo.py": "c66c5d61c1819dcc1bbb8ca5e7aa0ef8732174488275d3aba098869a3a2eff98",
+    "qlearning\\qLearningLv6Training.py": "abbb3a07b736721bf7729f3d11ff03bef48a6bee9692999599fee6d1c05de41f",
+    "qlearning\\qLearningResults.py": "bc265b586b38ff3e463d0d40b93c4d800f63a3ea9085cc6d458576ca55cfac87",
+    "resources\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "resources\\level0.py": "e494b460adfb8935d8a4827bfca864c9e605e59286dcbfcd0024bce75e944569",
+    "resources\\level1.py": "a36de6df8a569d7502a9dda693ba71701bff118cce38dc61f5f7182f9a7a730e",
+    "resources\\level2.py": "a29784e33faddb442fbe927a121b1f1451c9b34cb18b2600165f7625192f17d8",
+    "resources\\level3.py": "98000d5f7e50169fd8d2164c901f88fa0ef90607850b6918da1628b5e4b49884",
+    "resources\\level4.py": "bc180c3c1ee81dc1c0497e067fbac91141d170f3b2bada7db3ef5f21ce190609",
+    "resources\\level5.py": "aa6a436006f6052ba614537d8403f2bfc2737547fa0a2745327bd78e9edb506c",
+    "resources\\level6.py": "5efd3cc046fc1e2e18be679ab512b0579b3f3ad237b319fcc43e8d3273f67804",
+    "sarsa\\sarsa.py": "db71da6d47e0fc419dc00e23c6ff6242d346cefe6e2136f8673efcb4a6c47ce9",
+    "sarsa\\sarsaAgent.py": "6d55c72718673abe2f06edb5ad428f32107e381516749d862eecbd5312d328e6",
+    "sarsa\\sarsaResults.py": "30c1d6013d579dffb260f02266c29d1447069b2b4b55c412b240a408993bec5f",
+    "settings.py": "39bddffb06d57cbd26e660367eccfba7e27ec6de6b80e7f1cbd8c063f8a42143"
+  },
+  "settings": {
+    "episodes": 3000,
+    "alpha": 0.2,
+    "gamma": 0.95,
+    "epsilonStart": 1.0,
+    "epsilonEnd": 0.05,
+    "epsilonDecayEpisodes": 2700,
+    "monsterEpisodes": 20000,
+    "monsterEpsilonDecayEpisodes": 18000,
+    "maxStepsPerEpisode": 400,
+    "seed": 42,
+    "intrinsicRewardStrength": 0.001
+  },
+  "evaluationEpsilon": 0.0,
+  "runs": {
+    "qLearningLevel0": {
+      "model": "results/qlearningqTable_lvl0.pkl",
+      "csv": "results/qLearningLevel0Training.csv",
+      "graph": "results/qLearningLevel0Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 100.0,
+      "last300TrainingAverageSteps": 18.83,
+      "last300TrainingAverageEnvironmentReward": 20.8117,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        18
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 18,
+        "totalEnvironmentReward": 20.82,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            9,
+            8
+          ],
+          [
+            9,
+            9
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": 18
+    },
+    "sarsaLevel0": {
+      "model": "results/sarsaqTable_lvl0.pkl",
+      "csv": "results/sarsaLevel0Training.csv",
+      "graph": "results/sarsaLevel0Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 100.0,
+      "last300TrainingAverageSteps": 18.916666666666668,
+      "last300TrainingAverageEnvironmentReward": 20.81083333333333,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        18
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 18,
+        "totalEnvironmentReward": 20.82,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            9,
+            9
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": 18
+    },
+    "qLearningLevel1": {
+      "model": "results/qlearningqTable_lvl1.pkl",
+      "csv": "results/qLearningLevel1Training.csv",
+      "graph": "results/qLearningLevel1Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 83.33333333333334,
+      "last300TrainingAverageSteps": 22.24,
+      "last300TrainingAverageEnvironmentReward": 17.1126,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        23
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 23,
+        "totalEnvironmentReward": 20.77,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            0
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": 23
+    },
+    "sarsaLevel1": {
+      "model": "results/sarsaqTable_lvl1.pkl",
+      "csv": "results/sarsaLevel1Training.csv",
+      "graph": "results/sarsaLevel1Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 0.0,
+      "last300TrainingAverageSteps": 351.3466666666667,
+      "last300TrainingAverageEnvironmentReward": -3.7114666666666327,
+      "evaluationSuccessCount": 0,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        400
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": false,
+        "died": false,
+        "steps": 400,
+        "totalEnvironmentReward": -4.0,
+        "applesCollected": 0,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": 23
+    },
+    "qLearningLevel2": {
+      "model": "results/qlearningqTable_lvl2.pkl",
+      "csv": "results/qLearningLevel2Training.csv",
+      "graph": "results/qLearningLevel2Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 100.0,
+      "last300TrainingAverageSteps": 51.843333333333334,
+      "last300TrainingAverageEnvironmentReward": 23.481566666666666,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        49
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 49,
+        "totalEnvironmentReward": 23.51,
+        "applesCollected": 2,
+        "keysCollected": 1,
+        "chestsOpened": 1,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "sarsaLevel2": {
+      "model": "results/sarsaqTable_lvl2.pkl",
+      "csv": "results/sarsaLevel2Training.csv",
+      "graph": "results/sarsaLevel2Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 100.0,
+      "last300TrainingAverageSteps": 52.07666666666667,
+      "last300TrainingAverageEnvironmentReward": 23.479233333333333,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        49
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 49,
+        "totalEnvironmentReward": 23.51,
+        "applesCollected": 2,
+        "keysCollected": 1,
+        "chestsOpened": 1,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "qLearningLevel3": {
+      "model": "results/qlearningqTable_lvl3.pkl",
+      "csv": "results/qLearningLevel3Training.csv",
+      "graph": "results/qLearningLevel3Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 95.66666666666667,
+      "last300TrainingAverageSteps": 44.18333333333333,
+      "last300TrainingAverageEnvironmentReward": 22.548599999999997,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        43
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 43,
+        "totalEnvironmentReward": 23.57,
+        "applesCollected": 2,
+        "keysCollected": 1,
+        "chestsOpened": 1,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            0,
+            9
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "sarsaLevel3": {
+      "model": "results/sarsaqTable_lvl3.pkl",
+      "csv": "results/sarsaLevel3Training.csv",
+      "graph": "results/sarsaLevel3Training.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 97.0,
+      "last300TrainingAverageSteps": 44.46,
+      "last300TrainingAverageEnvironmentReward": 22.84903333333333,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        43
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 43,
+        "totalEnvironmentReward": 23.57,
+        "applesCollected": 2,
+        "keysCollected": 1,
+        "chestsOpened": 1,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            9
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "qLearningLevel4": {
+      "model": "results/qlearningqTable_lvl4.pkl",
+      "csv": "results/qLearningLevel4Training.csv",
+      "graph": "results/qLearningLevel4Training.png",
+      "trainingEpisodes": 20000,
+      "last300TrainingSuccessPercent": 98.33333333333333,
+      "last300TrainingAverageSteps": 19.296666666666667,
+      "last300TrainingAverageEnvironmentReward": 20.44053333333333,
+      "evaluationSuccessCount": 99,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        7,
+        18,
+        20,
+        26,
+        45
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 18,
+        "totalEnvironmentReward": 20.82,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            9,
+            9
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "sarsaLevel4": {
+      "model": "results/sarsaqTable_lvl4.pkl",
+      "csv": "results/sarsaLevel4Training.csv",
+      "graph": "results/sarsaLevel4Training.png",
+      "trainingEpisodes": 20000,
+      "last300TrainingSuccessPercent": 99.66666666666667,
+      "last300TrainingAverageSteps": 19.816666666666666,
+      "last300TrainingAverageEnvironmentReward": 20.72853333333333,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        18,
+        19,
+        20,
+        22,
+        26,
+        28,
+        30
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 18,
+        "totalEnvironmentReward": 20.82,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            8
+          ],
+          [
+            9,
+            9
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "qLearningLevel5": {
+      "model": "results/qlearningqTable_lvl5.pkl",
+      "csv": "results/qLearningLevel5Training.csv",
+      "graph": "results/qLearningLevel5Training.png",
+      "trainingEpisodes": 20000,
+      "last300TrainingSuccessPercent": 96.33333333333334,
+      "last300TrainingAverageSteps": 28.213333333333335,
+      "last300TrainingAverageEnvironmentReward": 20.901566666666664,
+      "evaluationSuccessCount": 98,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        38,
+        49,
+        50,
+        63
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 21,
+        "totalEnvironmentReward": 21.79,
+        "applesCollected": 2,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "sarsaLevel5": {
+      "model": "results/sarsaqTable_lvl5.pkl",
+      "csv": "results/sarsaLevel5Training.csv",
+      "graph": "results/sarsaLevel5Training.png",
+      "trainingEpisodes": 20000,
+      "last300TrainingSuccessPercent": 97.0,
+      "last300TrainingAverageSteps": 25.62,
+      "last300TrainingAverageEnvironmentReward": 21.0841,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        31,
+        33,
+        35,
+        36,
+        38,
+        39,
+        44,
+        49,
+        50
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 17,
+        "totalEnvironmentReward": 21.83,
+        "applesCollected": 2,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": null
+    },
+    "qLearningLevel6WithoutIntrinsic": {
+      "model": "results/qlearningqTable_lvl6WithoutIntrinsic.pkl",
+      "csv": "results/qLearningLevel6WithoutIntrinsic.csv",
+      "graph": "results/qLearningLevel6IntrinsicComparison.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 100.0,
+      "last300TrainingAverageSteps": 48.346666666666664,
+      "last300TrainingAverageEnvironmentReward": 20.51653333333333,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        46
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 46,
+        "totalEnvironmentReward": 20.54,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            2
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": 46
+    },
+    "qLearningLevel6WithIntrinsic": {
+      "model": "results/qlearningqTable_lvl6.pkl",
+      "csv": "results/qLearningLevel6WithIntrinsic.csv",
+      "graph": "results/qLearningLevel6IntrinsicComparison.png",
+      "trainingEpisodes": 3000,
+      "last300TrainingSuccessPercent": 100.0,
+      "last300TrainingAverageSteps": 48.346666666666664,
+      "last300TrainingAverageEnvironmentReward": 20.51653333333333,
+      "evaluationSuccessCount": 100,
+      "evaluationCount": 100,
+      "evaluationSteps": [
+        46
+      ],
+      "seed42Evaluation": {
+        "seed": 42,
+        "completed": true,
+        "died": false,
+        "steps": 46,
+        "totalEnvironmentReward": 20.54,
+        "applesCollected": 1,
+        "keysCollected": 0,
+        "chestsOpened": 0,
+        "keysHeld": 0,
+        "route": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            2
+          ]
+        ]
+      },
+      "shortestStaticPathSteps": 46
+    }
+  },
+  "level6EnvironmentMetricsIdentical": true,
+  "artifactHashes": {
+    "results\\qLearningLevel0Training.csv": "2f4bafdd9350d4a7b8927cb5f74cc6e5ba10949d0053c35b6967d40a0b236922",
+    "results\\qLearningLevel0Training.png": "8bd30193bd2e06e225921485ac016fba18b2d945865f17f24312839f55761af6",
+    "results\\qLearningLevel1Training.csv": "96246dbf11a26f299e69c7abac3f4412045459eb86e1465a668d1183081dd342",
+    "results\\qLearningLevel1Training.png": "9e55102797775aa72a08b769df336be1625008aaac0f918905c6c7f93d9d8ed9",
+    "results\\qLearningLevel2Training.csv": "8af279f37b53259136f6b020245f38d51d877b939a3b532224a6ae665f10475b",
+    "results\\qLearningLevel2Training.png": "b27c0be49615a682068eec81a249f9fbf77f4dfc7edfd446ade0ddb03f344766",
+    "results\\qLearningLevel3Training.csv": "94a12a5f249f9fe699ae0da69d1c93e72a68599fc38fd328d9269437063501b5",
+    "results\\qLearningLevel3Training.png": "5098536154b611dd3530ad663f5bf2353f951d305f1d0a475d3fff12abc3c811",
+    "results\\qLearningLevel4Training.csv": "e18861d41a6f78a63e71f9ce3f2513a22898055d7bb2bab67ed5f0b76f23356e",
+    "results\\qLearningLevel4Training.png": "49c28320f69c56bae0b94fea077c1bf51816e42070c9d1c167b6674cf5adbc82",
+    "results\\qLearningLevel5Training.csv": "dae7d26fb894ad6e35044e112a5b688a0e06cc497918348fb9dca9dd304ee2d9",
+    "results\\qLearningLevel5Training.png": "523c34287d1453d1c7743c60c83bfc7568b886f3678a88b28b4ce1ceb812c2bb",
+    "results\\qLearningLevel6IntrinsicComparison.png": "5768d044f909bd6075df42c034f900cf5f30c6790e2f83d5841f09d36a3b095e",
+    "results\\qLearningLevel6WithIntrinsic.csv": "738489b486cd037ec1bd56a637894330d333bf362f86ac783c71098669dcf828",
+    "results\\qLearningLevel6WithoutIntrinsic.csv": "ce7299f3d3ff211bd2d51f3d9988c1ac799848f258d3644f64117b59ab798682",
+    "results\\qlearningqTable_lvl0.pkl": "3f20f494460468a14a459c961e6bde0014057c5d225a2dd6bc18fdfc93f66644",
+    "results\\qlearningqTable_lvl1.pkl": "2b7fea3dcfd7ca2f5aa8f070a519e4e84eb6d9235cc921290ec9b2110909f8e2",
+    "results\\qlearningqTable_lvl2.pkl": "67446fecbc7e367aa5b1208243f5b5e7828452e474a1de36dc63ae62e61671ed",
+    "results\\qlearningqTable_lvl3.pkl": "0d854603c503e30f36665606420faf88e45630193b62befad2121fe57c08dcc1",
+    "results\\qlearningqTable_lvl4.pkl": "b9cf8b28d160b85b4cede8684757c1cb47e12502ed3581ee7955b6a64b50f0cd",
+    "results\\qlearningqTable_lvl5.pkl": "d793ce6666b1b353c12e54dc2adc45c10146ad452c46388c3398abf397b408fa",
+    "results\\qlearningqTable_lvl6.pkl": "23ad7da69cdd11ae4fe808e3e2304da185590e1d73bce9978b02e848637f6b48",
+    "results\\qlearningqTable_lvl6WithoutIntrinsic.pkl": "7912af58d83d1ad9cbff45c86b34cdab53f8b71b70191869c499a8166d39d60b",
+    "results\\sarsaLevel0Training.csv": "39d9e3aa0b5e9786d20d13bfc5d5f682b3285137cb8a83637dff6a8173fecd54",
+    "results\\sarsaLevel0Training.png": "2930ef28f4fe21e09591eb000d0e32de23fe8ef14037bf86d57c518ca75cea0d",
+    "results\\sarsaLevel1Training.csv": "18f2b65ef2ead90d8d06a6165eafd750fee7382d439e5e5abeb13738880cc42e",
+    "results\\sarsaLevel1Training.png": "3ef6ffc30009436a677dedb8760a43594566ab1e2aca8a6332c8c182ade4cdf1",
+    "results\\sarsaLevel2Training.csv": "d6398fb821a8826619be9be85c5e472e7f967563bac65fd959e2555ff24f8499",
+    "results\\sarsaLevel2Training.png": "3b4b71e63801a527f8f255ce808628d5df2b83943c2e02e165fe6d0bdb20e9e9",
+    "results\\sarsaLevel3Training.csv": "c191e00bae2edfff0e05092b92acb00325c284ea0e237b7aed61f488e122d336",
+    "results\\sarsaLevel3Training.png": "f3f6a10784ffe290b30e9427d5a82864af3aed41c32a29b52869eefe952d3111",
+    "results\\sarsaLevel4Training.csv": "a8d1c9e7056a5d11356381c4c6553dffb0c09509983b7bcb7bda54e63a6948e8",
+    "results\\sarsaLevel4Training.png": "5db2cdbf88df507730f34c46e45a25749c6fbd6082a9738810e71875271596af",
+    "results\\sarsaLevel5Training.csv": "b3b581286f627ded7d97137361c9a5e6fd52b386661e5e8d6faeba6b693f6834",
+    "results\\sarsaLevel5Training.png": "5c333ca7378340afa7a19ff2e5b6f893e41d0ea9c61f57ebed3f130ab46d396b",
+    "results\\sarsaqTable_lvl0.pkl": "87b59b81a4a2f7aeeb5d48dd00522eb80ac8d359f52529d667cd903c895f7903",
+    "results\\sarsaqTable_lvl1.pkl": "8a21131d6df8cfa35ff1e1c5e30d70ee8ac4dd5725878c221945dc0f67516966",
+    "results\\sarsaqTable_lvl2.pkl": "f02e72c70fedd25b4c75d844d264ae24f8f8a60f86eb84c766887cf7f46eb032",
+    "results\\sarsaqTable_lvl3.pkl": "551f30d488da56b19410bf813a67097d5072564bc476bdf09e2b1148c9c56cd0",
+    "results\\sarsaqTable_lvl4.pkl": "d8571cc3ee40941049a64b093d96200102217a88b5a37c91d676cdcc8e0059f0",
+    "results\\sarsaqTable_lvl5.pkl": "84a2073f08e0a3ea6146bd2fb73ffcb6863538b4fbabd717b31bcbffde340d86"
+  }
+}

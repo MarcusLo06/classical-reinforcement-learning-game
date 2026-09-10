@@ -35,35 +35,35 @@ def createTrainingGraph (trainingResults, graphTitle, fileName) :
     averageRewards = movingAverage(totalRewards)
     averageSuccessRate = movingAverage(completedValues)
     averageDeathRate = movingAverage(deathValues)
-    maximumReward = [1] * len(episodes)
 
     plt.figure(figsize = (10, 10))
 
     plt.subplot(3, 1, 1)
     plt.plot(episodes, averageSteps, label = "50-Episode Average Steps")
-    plt.title(graphTitle)
+    plt.title(graphTitle + "\nSeed 42 | Step -0.01 | Death -1 | Completion +20", fontsize = 11)
     plt.ylabel("Steps")
     plt.legend()
     plt.grid(True)
 
     plt.subplot(3, 1, 2)
     plt.plot(episodes, averageRewards, label = "50-Episode Average Reward")
-    plt.plot(episodes, maximumReward, label = "Maximum Reward")
-    plt.ylabel("Reward")
+    plt.ylabel("Environment Reward")
     plt.legend()
     plt.grid(True)
 
     plt.subplot(3, 1, 3)
-    plt.plot(episodes, averageSuccessRate, label = "50-Episode Success Rate")
-    plt.plot(episodes, averageDeathRate, label = "50-Episode Death Rate")
-    plt.plot(episodes, epsilonValues, label = "Epsilon")
+    plt.plot(episodes, averageSuccessRate, color = "#2878B5", label = "50-Episode Success Rate")
+    plt.plot(episodes, averageDeathRate, color = "#D88028", linestyle = "--", label = "50-Episode Death Rate")
+    plt.plot(episodes, epsilonValues, color = "#697A39", linestyle = ":", label = "Epsilon")
     plt.xlabel("Episode")
     plt.ylabel("Rate")
     plt.legend()
     plt.grid(True)
 
     graphPath = f"results/{fileName}.png"
+    plt.tight_layout()
     plt.savefig(graphPath)
+    plt.close()
 
     return graphPath
 
