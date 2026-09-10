@@ -167,8 +167,8 @@ class WorldEnvironment:
             and len(self.unopenedChests) == 0
         )
 
-        if self.done:
-            reward += 20.0
+        # if self.done:
+        #     reward += 20.0
 
         return self.getState(), reward, self.done, MOVE_DIRECTIONS[action]
     
