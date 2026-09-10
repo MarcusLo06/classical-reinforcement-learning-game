@@ -28,19 +28,21 @@ def createTrainingGraph (trainingResults, graphTitle, fileName) :
     averageSteps = movingAverage(steps)
     averageRewards = movingAverage(totalRewards)
     averageSuccessRate = movingAverage(completedValues)
+    maximumReward = [4] * len(episodes)
 
     plt.figure(figsize = (10, 10))
 
     plt.subplot(3, 1, 1)
     plt.plot(episodes, averageSteps, label = "50-Episode Average Steps")
-    plt.title(graphTitle + "\nSeed 42 | Step -0.01 | Death -1 | Completion +20", fontsize = 11)
+    plt.title(graphTitle)
     plt.ylabel("Steps")
     plt.legend()
     plt.grid(True)
 
     plt.subplot(3, 1, 2)
     plt.plot(episodes, averageRewards, label = "50-Episode Average Reward")
-    plt.ylabel("Environment Reward")
+    plt.plot(episodes, maximumReward, label = "Maximum Reward")
+    plt.ylabel("Reward")
     plt.legend()
     plt.grid(True)
 
@@ -53,9 +55,7 @@ def createTrainingGraph (trainingResults, graphTitle, fileName) :
     plt.grid(True)
 
     graphPath = f"results/{fileName}.png"
-    plt.tight_layout()
     plt.savefig(graphPath)
-    plt.close()
 
     return graphPath
 
