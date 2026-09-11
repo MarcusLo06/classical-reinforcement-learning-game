@@ -35,7 +35,6 @@ def createTrainingGraph (trainingResults, graphTitle, fileName) :
     averageRewards = movingAverage(totalRewards)
     averageSuccessRate = movingAverage(completedValues)
     averageDeathRate = movingAverage(deathValues)
-    maximumReward = [1] * len(episodes)
 
     plt.figure(figsize = (10, 10))
 
@@ -48,7 +47,6 @@ def createTrainingGraph (trainingResults, graphTitle, fileName) :
 
     plt.subplot(3, 1, 2)
     plt.plot(episodes, averageRewards, label = "50-Episode Average Reward")
-    plt.plot(episodes, maximumReward, label = "Maximum Reward")
     plt.ylabel("Reward")
     plt.legend()
     plt.grid(True)
